@@ -1,15 +1,26 @@
 package com.pawmart.backend.common.exception;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public record ErrorResponse(String code, String message, List<FieldError> fieldErrors) {
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-  public static ErrorResponse of(ErrorCode errorCode) {
-    return new ErrorResponse(errorCode.getCode(), errorCode.getMessage(), List.of());
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public record ErrorResponse(
+    LocalDateTime timestamp,
+    String path,
+    String code,
+    String message,
+    List<FieldError> fieldErrors) {
+
+  public static ErrorResponse of(ErrorCode errorCode, String path) {
+    return new ErrorResponse(
+        LocalDateTime.now(), path, errorCode.getCode(), errorCode.getMessage(), List.of());
   }
 
-  public static ErrorResponse of(ErrorCode errorCode, List<FieldError> fieldErrors) {
-    return new ErrorResponse(errorCode.getCode(), errorCode.getMessage(), fieldErrors);
+  public static ErrorResponse of(ErrorCode errorCode, String path, List<FieldError> fieldErrors) {
+    return new ErrorResponse(
+        LocalDateTime.now(), path, errorCode.getCode(), errorCode.getMessage(), fieldErrors);
   }
 
   public record FieldError(String field, String reason) {}
