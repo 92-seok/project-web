@@ -1,0 +1,71 @@
+### 환경 변수
+@host = http://localhost:9000
+
+### 1. 회원가입 — 성공 (HTTP 201 기대)
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "loginId": "tester1",
+  "password": "test1234",
+  "name": "테스터",
+  "email": "tester1@example.com",
+  "gender": "M",
+  "birthDate": "1990-05-15",
+  "phone": "010-1111-2222",
+  "smsAgreed": true,
+  "emailAgreed": false,
+  "postalCode": "12345",
+  "roadAddress": "서울시 강남구 테헤란로 123",
+  "jibunAddress": "서울시 강남구 역삼동 1-1",
+  "detailAddress": "101동 202호"
+}
+
+### 2. 회원가입 — 중복 아이디 실패 (HTTP 409 기대, code=M001)
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "loginId": "tester1",
+  "password": "test1234",
+  "name": "다른사람",
+  "email": "another@example.com"
+}
+
+### 3. 회원가입 — 검증 실패 (HTTP 400 기대, fieldErrors 배열 확인)
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "loginId": "짧",
+  "password": "123",
+  "name": "",
+  "email": "not-an-email"
+}
+
+### 4. 로그인 — 성공 (HTTP 200 기대)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "loginId": "tester1",
+  "password": "test1234"
+}
+
+### 5. 로그인 — 비밀번호 오류 (HTTP 401 기대, code=M003)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "loginId": "tester1",
+  "password": "wrongpassword"
+}
+
+### 6. 로그인 — 존재하지 않는 아이디 (HTTP 401 기대, code=M003)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "loginId": "nobody",
+  "password": "test1234"
+}

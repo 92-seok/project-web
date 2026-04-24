@@ -1,0 +1,22 @@
+# app/backend/src/main/resources/application.yml
+spring:
+  application:
+    name: backend
+
+  profiles:
+    # 실행 시 -Dspring.profiles.active=... 지정이 없으면 local로 기동
+    default: local
+
+  jpa:
+    open-in-view: false # 성능 최적화: 트랜잭션 범위 밖에서의 지연 로딩 방지
+    hibernate:
+      ddl-auto: none # 운영 안전: JPA가 스키마 자동 변경 금지 (Flyway가 담당 예정)
+      # properties.hibernate.dialect 섹션 삭제 → 자동 감지에 맡김
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    # baseline-on-migrate 는 기존 운영 DB에 Flyway를 처음 도입할 때만 true.
+    # 신규 개발 DB에서는 V1부터 차례로 실제 실행되어야 하므로 미설정(기본 false).
+server:
+  port: 9000

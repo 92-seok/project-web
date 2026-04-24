@@ -1,0 +1,28 @@
+# EditorConfig: https://editorconfig.org
+# Prettier와 .gitignore 바로 옆, git 루트에 위치시켜 모든 하위 프로젝트(backend/frontend)에 적용
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Java는 Google Java Format 기본값(2 스페이스)에 맞춤 → Spotless와 충돌 없음
+[*.java]
+indent_size = 2
+
+# Gradle DSL은 스페이스 4칸이 관례 (기존 build.gradle 스타일 유지)
+[*.{gradle,groovy,gradle.kts}]
+indent_size = 4
+
+# Makefile은 탭 필수 (문법 요구사항)
+[Makefile]
+indent_style = tab
+
+# 마크다운은 줄 끝 두 칸 공백이 강제 줄바꿈 의미 → trim 금지
+[*.md]
+trim_trailing_whitespace = false

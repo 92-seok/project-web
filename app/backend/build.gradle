@@ -1,0 +1,77 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot' version '4.0.6'
+  id 'io.spring.dependency-management' version '1.1.7'
+  id 'com.diffplug.spotless' version '7.0.2'   // ← 추가
+}
+
+group = 'com.pawmart'
+version = '0.0.1-SNAPSHOT'
+
+java {
+  toolchain {
+      languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+  // ─── Flyway ─────────────────────────────────────────────
+  // Boot 4부터 자동설정이 모듈별로 분리됨 → starter-flyway 로 spring-boot-flyway(자동설정) 확보
+  implementation 'org.springframework.boot:spring-boot-starter-flyway'
+  // MySQL/MariaDB 방언은 별도 모듈로 명시 필수 (Flyway 10+ 정책)
+  implementation 'org.flywaydb:flyway-mysql'
+  // ────────────────────────────────────────────────────────
+
+  compileOnly 'org.projectlombok:lombok'
+  developmentOnly 'org.springframework.boot:spring-boot-devtools'
+  runtimeOnly 'com.mysql:mysql-connector-j'
+  annotationProcessor 'org.projectlombok:lombok'
+  // starter-test 하나로 JUnit5 + Mockito + AssertJ + Spring Test + MockMvc + Jackson-test 모두 포함
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  // Spring Security 전용 테스트 유틸(@WithMockUser, csrf() 등)은 별도 아티팩트
+  testImplementation 'org.springframework.security:spring-security-test'
+  testCompileOnly 'org.projectlombok:lombok'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  testAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
+bootRun {
+  systemProperty 'spring.profiles.active',
+      System.getProperty('spring.profiles.active', 'local')
+}
+
+// ─── Spotless 설정 ────────────────────────────────────────────
+spotless {
+  java {
+      target 'src/**/*.java'
+      targetExclude 'build/**', 'out/**'
+
+      googleJavaFormat('1.25.2')     // 2 스페이스 · Google 스타일
+      removeUnusedImports()
+      importOrder('java', 'javax', 'jakarta', 'org', 'com', '')
+      trimTrailingWhitespace()
+      endWithNewline()
+      formatAnnotations()            // 어노테이션 한 줄씩 정렬
+  }
+
+  format 'misc', {
+      target '*.gradle', '*.md', '.gitignore',
+              'src/**/*.yml', 'src/**/*.yaml', 'src/**/*.properties'
+      trimTrailingWhitespace()
+      endWithNewline()
+  }
+}

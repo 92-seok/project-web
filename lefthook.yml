@@ -1,0 +1,14 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: spotless
+      root: "app/backend/"
+      glob: "*.java"
+      run: ./gradlew spotlessApply --daemon -q
+      stage_fixed: true
+
+    - name: prettier
+      root: "app/backend/"
+      glob: "*.{json,yml,yaml,md}"
+      run: npx --yes prettier@3 --write {staged_files}
+      stage_fixed: true
