@@ -118,6 +118,29 @@ public class Member {
     this.detailAddress = detailAddress;
   }
 
+  public void updateProfile(
+      String name,
+      String phone,
+      String gender,
+      LocalDate birthDate,
+      String postalCode,
+      String roadAddress,
+      String jibunAddress,
+      String detailAddress,
+      Boolean smsAgreed,
+      Boolean emailAgreed) {
+    if (name != null) this.name = name;
+    if (phone != null) this.phone = phone;
+    if (gender != null) this.gender = gender;
+    if (birthDate != null) this.birthDate = birthDate;
+    if (postalCode != null) this.postalCode = postalCode;
+    if (roadAddress != null) this.roadAddress = roadAddress;
+    if (jibunAddress != null) this.jibunAddress = jibunAddress;
+    if (detailAddress != null) this.detailAddress = detailAddress;
+    if (smsAgreed != null) this.smsAgreed = smsAgreed;
+    if (emailAgreed != null) this.emailAgreed = emailAgreed;
+  }
+
   public void withdraw() {
     this.status = MemberStatus.WITHDRAWN;
   }

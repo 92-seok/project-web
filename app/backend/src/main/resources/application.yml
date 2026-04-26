@@ -20,3 +20,12 @@ spring:
     # 신규 개발 DB에서는 V1부터 차례로 실제 실행되어야 하므로 미설정(기본 false).
 server:
   port: 9000
+
+jwt:
+  secret: ${JWT_SECRET:dev-secret-key-must-be-at-least-256-bits-long-for-hs256}
+  access-token-expiry: 1800000   # 30분
+  refresh-token-expiry: 604800000 # 7일
+
+toss:
+  secret-key: ${TOSS_SECRET_KEY:test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R}
+  client-key: ${TOSS_CLIENT_KEY:test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoh}

@@ -6,8 +6,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
+    /* Editorial Wellness 2026 — Pawmart v2 */
+    --font-sans: 'Pretendard Variable', 'Geist Variable', -apple-system, BlinkMacSystemFont,
+        'Helvetica Neue', sans-serif;
+    --font-heading: 'Fraunces', 'Pretendard Variable', serif;
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -39,92 +43,162 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
+
+    /* 효능 배지 전용 컬러 — Sage / Honey / Mint / Olive / Coral */
+    --color-badge-care: var(--badge-care);
+    --color-badge-dental: var(--badge-dental);
+    --color-badge-organic: var(--badge-organic);
+    --color-badge-joint: var(--badge-joint);
+    --color-badge-vet: var(--badge-vet);
+
+    --radius-sm: calc(var(--radius) * 0.5);
+    --radius-md: calc(var(--radius) * 0.75);
     --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+    --radius-xl: calc(var(--radius) * 1.5);
+    --radius-2xl: calc(var(--radius) * 2);
+    --radius-3xl: calc(var(--radius) * 2.5);
+    --radius-4xl: calc(var(--radius) * 3);
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    /* Editorial Wellness 2026
+       Primary  : #6B8E7F  Muted Sage   → oklch(0.59 0.04 155)
+       Deep     : #2D4A3E  Deep Forest  → oklch(0.34 0.04 160)
+       Accent   : #C8553D  Terracotta   → oklch(0.55 0.16 35)   — WCAG AA 통과 (4.0:1+)
+       Surface  : #FAF7F2  Warm Cream   → oklch(0.97 0.008 80)
+       Surface2 : #EFE9DD  Soft Sand    → oklch(0.92 0.015 80)
+       Text     : #1F2A26  Forest Black → oklch(0.21 0.012 165)
+    */
+
+    --background: oklch(0.97 0.008 80);
+    --foreground: oklch(0.21 0.012 165);
+    --card: oklch(0.99 0.004 80);
+    --card-foreground: oklch(0.21 0.012 165);
+    --popover: oklch(0.99 0.004 80);
+    --popover-foreground: oklch(0.21 0.012 165);
+
+    --primary: oklch(0.34 0.04 160);          /* Deep Forest — 헤더/타이틀 */
+    --primary-foreground: oklch(0.98 0.005 80);
+
+    --secondary: oklch(0.92 0.015 80);        /* Soft Sand */
+    --secondary-foreground: oklch(0.34 0.04 160);
+
+    --muted: oklch(0.94 0.012 80);
+    --muted-foreground: oklch(0.50 0.015 165);
+
+    --accent: oklch(0.55 0.16 35);            /* Terracotta — CTA/강조 */
+    --accent-foreground: oklch(0.99 0.005 80);
+
+    --destructive: oklch(0.55 0.20 27);
+    --border: oklch(0.88 0.015 80);
+    --input: oklch(0.88 0.015 80);
+    --ring: oklch(0.59 0.04 155);
+
+    --chart-1: oklch(0.59 0.04 155);          /* Sage */
+    --chart-2: oklch(0.55 0.16 35);           /* Terracotta */
+    --chart-3: oklch(0.70 0.06 80);           /* Honey */
+    --chart-4: oklch(0.65 0.07 165);          /* Mint */
+    --chart-5: oklch(0.34 0.04 160);          /* Deep Forest */
+
+    --radius: 0.75rem;                         /* 12px — 라운디드 */
+
+    /* 효능 배지 (의약 표현 회피: "강화/예방/치료" 사용 X) */
+    --badge-care: oklch(0.59 0.04 155);       /* Sage — 민감 케어 */
+    --badge-dental: oklch(0.65 0.07 165);     /* Mint — 덴탈 케어 */
+    --badge-organic: oklch(0.70 0.10 130);    /* Olive — 유기농 인증 */
+    --badge-joint: oklch(0.70 0.06 80);       /* Honey — 관절 케어 */
+    --badge-vet: oklch(0.55 0.16 35);         /* Terracotta — 수의사 검증 */
+
+    /* 사이드바 (어드민용) */
+    --sidebar: oklch(0.34 0.04 160);
+    --sidebar-foreground: oklch(0.92 0.015 80);
+    --sidebar-primary: oklch(0.55 0.16 35);
+    --sidebar-primary-foreground: oklch(0.99 0.005 80);
+    --sidebar-accent: oklch(0.40 0.04 160);
+    --sidebar-accent-foreground: oklch(0.92 0.015 80);
+    --sidebar-border: oklch(0.42 0.04 160);
+    --sidebar-ring: oklch(0.59 0.04 155);
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    /* 따뜻한 차콜 베이스 (순흑 X) */
+    --background: oklch(0.18 0.008 165);
+    --foreground: oklch(0.95 0.008 80);
+    --card: oklch(0.22 0.010 165);
+    --card-foreground: oklch(0.95 0.008 80);
+    --popover: oklch(0.22 0.010 165);
+    --popover-foreground: oklch(0.95 0.008 80);
+
+    --primary: oklch(0.92 0.015 80);
+    --primary-foreground: oklch(0.18 0.008 165);
+
+    --secondary: oklch(0.27 0.012 165);
+    --secondary-foreground: oklch(0.95 0.008 80);
+
+    --muted: oklch(0.27 0.012 165);
+    --muted-foreground: oklch(0.70 0.015 165);
+
+    --accent: oklch(0.65 0.14 35);            /* Coral 다크 보정 */
+    --accent-foreground: oklch(0.18 0.008 165);
+
+    --destructive: oklch(0.65 0.18 25);
+    --border: oklch(1 0 0 / 8%);
+    --input: oklch(1 0 0 / 12%);
+    --ring: oklch(0.59 0.04 155);
+
+    --chart-1: oklch(0.59 0.04 155);
+    --chart-2: oklch(0.65 0.14 35);
+    --chart-3: oklch(0.75 0.06 80);
+    --chart-4: oklch(0.70 0.07 165);
+    --chart-5: oklch(0.55 0.04 160);
+
+    --badge-care: oklch(0.65 0.05 155);
+    --badge-dental: oklch(0.72 0.07 165);
+    --badge-organic: oklch(0.75 0.10 130);
+    --badge-joint: oklch(0.75 0.06 80);
+    --badge-vet: oklch(0.65 0.14 35);
+
+    --sidebar: oklch(0.22 0.010 165);
+    --sidebar-foreground: oklch(0.95 0.008 80);
+    --sidebar-primary: oklch(0.65 0.14 35);
+    --sidebar-primary-foreground: oklch(0.18 0.008 165);
+    --sidebar-accent: oklch(0.27 0.012 165);
+    --sidebar-accent-foreground: oklch(0.95 0.008 80);
+    --sidebar-border: oklch(1 0 0 / 8%);
+    --sidebar-ring: oklch(0.59 0.04 155);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
+  }
   body {
     @apply bg-background text-foreground;
-    }
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+  }
   html {
     @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Editorial 헤드라인용 유틸리티 */
+  .font-editorial {
+    font-family: var(--font-heading);
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  /* prefers-reduced-motion 존중 */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
+  }
 }

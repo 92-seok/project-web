@@ -8,9 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pawmart.backend.common.exception.BusinessException;
 import com.pawmart.backend.common.exception.ErrorCode;
+import com.pawmart.backend.config.JwtUtil;
+import com.pawmart.backend.member.dto.ChangePasswordRequest;
 import com.pawmart.backend.member.dto.LoginRequest;
 import com.pawmart.backend.member.dto.LoginResponse;
+import com.pawmart.backend.member.dto.RefreshRequest;
+import com.pawmart.backend.member.dto.RefreshResponse;
 import com.pawmart.backend.member.dto.SignUpRequest;
+import com.pawmart.backend.member.dto.UpdateProfileRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +26,7 @@ public class MemberService {
 
   private final MemberRepository memberRepository;
   private final PasswordEncoder passwordEncoder;
+  private final JwtUtil jwtUtil;
 
   @Transactional
   public Long signUp(SignUpRequest request) {
@@ -71,8 +77,84 @@ public class MemberService {
       throw new BusinessException(ErrorCode.INACTIVE_MEMBER);
     }
 
+    String accessToken = jwtUtil.generateAccessToken(member.getId(), member.getLoginId(), member.getName(), member.getRole());
+    String refreshToken = jwtUtil.generateRefreshToken(member.getId());
+
     return new LoginResponse(
-        member.getId(), member.getLoginId(), member.getName(), member.getRole());
+        member.getId(), member.getLoginId(), member.getName(), member.getRole(),
+        accessToken, refreshToken);
+  }
+
+  public RefreshResponse refresh(RefreshRequest request) {
+    String refreshToken = request.refreshToken();
+
+    if (!jwtUtil.isValid(refreshToken)) {
+      throw new BusinessException(ErrorCode.INVALID_TOKEN);
+    }
+    if (jwtUtil.isExpired(refreshToken)) {
+      throw new BusinessException(ErrorCode.EXPIRED_TOKEN);
+    }
+
+    Long memberId = jwtUtil.getMemberId(jwtUtil.parseClaims(refreshToken));
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+
+    if (member.getStatus() != MemberStatus.ACTIVE) {
+      throw new BusinessException(ErrorCode.INACTIVE_MEMBER);
+    }
+
+    String accessToken =
+        jwtUtil.generateAccessToken(
+            member.getId(), member.getLoginId(), member.getName(), member.getRole());
+    return new RefreshResponse(accessToken);
+  }
+
+  @Transactional
+  public void updateProfile(Long memberId, UpdateProfileRequest request) {
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+
+    member.updateProfile(
+        request.name(),
+        request.phone(),
+        request.gender(),
+        request.birthDate(),
+        request.postalCode(),
+        request.roadAddress(),
+        request.jibunAddress(),
+        request.detailAddress(),
+        request.smsAgreed(),
+        request.emailAgreed());
+  }
+
+  @Transactional
+  public void changePassword(Long memberId, ChangePasswordRequest request) {
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+
+    if (!passwordEncoder.matches(request.currentPassword(), member.getPasswordHash())) {
+      throw new BusinessException(ErrorCode.LOGIN_FAILED);
+    }
+    if (passwordEncoder.matches(request.newPassword(), member.getPasswordHash())) {
+      throw new BusinessException(ErrorCode.SAME_PASSWORD);
+    }
+
+    member.changePassword(passwordEncoder.encode(request.newPassword()));
+  }
+
+  @Transactional
+  public void withdraw(Long memberId) {
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+    member.withdraw();
   }
 
   private BusinessException mapDuplicateKey(DataIntegrityViolationException e) {

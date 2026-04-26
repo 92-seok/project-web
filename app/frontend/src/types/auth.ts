@@ -32,6 +32,15 @@ export interface LoginResponse {
   loginId: string
   name: string
   role: MemberRole
+  accessToken: string
+  refreshToken: string
+}
+
+export interface UserInfo {
+  memberId: number
+  loginId: string
+  name: string
+  role: MemberRole
 }
 
 export interface ApiErrorResponse {

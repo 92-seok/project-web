@@ -1,22 +1,45 @@
-import type { LoginResponse } from '@/types/auth'
+import type { LoginResponse, UserInfo } from '@/types/auth'
 
-// JWT 도입 전 임시 세션 저장소. 4단계에서 JWT 기반으로 교체 예정.
-const SESSION_KEY = 'pawmart.session'
+const KEYS = {
+  ACCESS_TOKEN: 'pawmart.accessToken',
+  REFRESH_TOKEN: 'pawmart.refreshToken',
+  USER: 'pawmart.user',
+} as const
 
 export const session = {
-  save(member: LoginResponse) {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(member))
+  save(data: LoginResponse) {
+    localStorage.setItem(KEYS.ACCESS_TOKEN, data.accessToken)
+    localStorage.setItem(KEYS.REFRESH_TOKEN, data.refreshToken)
+    const user: UserInfo = {
+      memberId: data.memberId,
+      loginId: data.loginId,
+      name: data.name,
+      role: data.role,
+    }
+    localStorage.setItem(KEYS.USER, JSON.stringify(user))
   },
-  load(): LoginResponse | null {
-    const raw = localStorage.getItem(SESSION_KEY)
+
+  getAccessToken(): string | null {
+    return localStorage.getItem(KEYS.ACCESS_TOKEN)
+  },
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem(KEYS.REFRESH_TOKEN)
+  },
+
+  getUser(): UserInfo | null {
+    const raw = localStorage.getItem(KEYS.USER)
     if (!raw) return null
     try {
-      return JSON.parse(raw) as LoginResponse
+      return JSON.parse(raw) as UserInfo
     } catch {
       return null
     }
   },
+
   clear() {
-    localStorage.removeItem(SESSION_KEY)
+    localStorage.removeItem(KEYS.ACCESS_TOKEN)
+    localStorage.removeItem(KEYS.REFRESH_TOKEN)
+    localStorage.removeItem(KEYS.USER)
   },
 }

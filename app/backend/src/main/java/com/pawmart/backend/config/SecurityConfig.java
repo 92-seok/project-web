@@ -12,14 +12,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-  // 환경변수(또는 application-*.yml) 미지정 시 로컬 프론트 dev 서버 두 포트를 기본 허용
+  private final JwtAuthFilter jwtAuthFilter;
+
   @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000}")
   private String[] allowedOrigins;
 
@@ -31,11 +36,17 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(
-                        "/api/auth/signup", "/api/auth/login", "/api/public/**", "/actuator/health")
+                        "/api/auth/signup",
+                        "/api/auth/login",
+                        "/api/auth/refresh",
+                        "/api/public/**",
+                        "/actuator/health")
                     .permitAll()
-                    // 그 외 모든 요청은 인증 필요. JWT 필터 도입 전까지는 보호 엔드포인트에 접근 시 401
+                    .requestMatchers("/api/products/**").permitAll()
+                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
                     .anyRequest()
-                    .authenticated());
+                    .authenticated())
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
