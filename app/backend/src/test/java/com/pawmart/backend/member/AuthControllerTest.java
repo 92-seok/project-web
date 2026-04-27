@@ -19,13 +19,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pawmart.backend.common.exception.BusinessException;
 import com.pawmart.backend.common.exception.ErrorCode;
 import com.pawmart.backend.common.exception.GlobalExceptionHandler;
+import com.pawmart.backend.config.JwtAuthFilter;
+import com.pawmart.backend.config.JwtUtil;
 import com.pawmart.backend.config.SecurityConfig;
 import com.pawmart.backend.member.dto.LoginRequest;
 import com.pawmart.backend.member.dto.LoginResponse;
 import com.pawmart.backend.member.dto.SignUpRequest;
 
 @WebMvcTest(AuthController.class)
-@Import({SecurityConfig.class, GlobalExceptionHandler.class})
+@Import({SecurityConfig.class, GlobalExceptionHandler.class, JwtAuthFilter.class})
 class AuthControllerTest {
 
   @Autowired private MockMvc mockMvc;
@@ -35,6 +37,10 @@ class AuthControllerTest {
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   @MockitoBean private MemberService memberService;
+
+  // JwtAuthFilter는 실제 빈으로 등록(@Import)하고, 의존하는 JwtUtil만 mock으로 채운다.
+  // 인증 헤더 없는 요청은 필터를 그대로 통과 → permitAll 경로(login/signup)에 도달.
+  @MockitoBean private JwtUtil jwtUtil;
 
   // ─── 회원가입 ─────────────────────────────────────────────
 
@@ -101,7 +107,14 @@ class AuthControllerTest {
   @Test
   void login_success_returnsMemberInfo() throws Exception {
     given(memberService.login(any(LoginRequest.class)))
-        .willReturn(new LoginResponse(1L, "validUser", "홍길동", MemberRole.USER));
+        .willReturn(
+            new LoginResponse(
+                1L,
+                "validUser",
+                "홍길동",
+                MemberRole.USER,
+                "dummy-access-token",
+                "dummy-refresh-token"));
 
     mockMvc
         .perform(

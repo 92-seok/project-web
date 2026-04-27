@@ -12,10 +12,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.pawmart.backend.common.exception.BusinessException;
+import com.pawmart.backend.common.exception.ErrorCode;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -68,6 +72,10 @@ public class Product {
 
   @Column(name = "review_count", nullable = false)
   private int reviewCount;
+
+  @Version
+  @Column(nullable = false)
+  private long version;
 
   @CreatedDate
   @Column(name = "created_at", nullable = false, updatable = false)
@@ -131,5 +139,22 @@ public class Product {
 
   public void hide() {
     this.status = ProductStatus.HIDDEN;
+  }
+
+  public void decreaseStock(int quantity) {
+    if (quantity <= 0) {
+      throw new BusinessException(ErrorCode.INVALID_REQUEST);
+    }
+    if (this.stock < quantity) {
+      throw new BusinessException(ErrorCode.OUT_OF_STOCK);
+    }
+    this.stock -= quantity;
+  }
+
+  public void increaseStock(int quantity) {
+    if (quantity <= 0) {
+      throw new BusinessException(ErrorCode.INVALID_REQUEST);
+    }
+    this.stock += quantity;
   }
 }

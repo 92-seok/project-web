@@ -1,0 +1,34 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:pawmart-test;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+
+server:
+  port: 0
+
+jwt:
+  secret: test-secret-key-must-be-at-least-256-bits-long-for-hs256-test
+  access-token-expiry: 1800000
+  refresh-token-expiry: 604800000
+
+toss:
+  secret-key: test_sk_dummy
+  client-key: test_ck_dummy
+
+app:
+  upload:
+    dir: ./build/test-uploads
+    public-prefix: /uploads

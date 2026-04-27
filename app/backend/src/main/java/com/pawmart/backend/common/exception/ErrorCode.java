@@ -26,6 +26,7 @@ public enum ErrorCode {
 
   // Product
   PRODUCT_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "P001", "구매 불가능한 상품입니다."),
+  OUT_OF_STOCK(HttpStatus.CONFLICT, "P002", "재고가 부족합니다."),
 
   // Cart
   CART_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "C010", "장바구니에 없는 상품입니다."),
@@ -34,6 +35,15 @@ public enum ErrorCode {
   PAYMENT_FAILED(HttpStatus.BAD_GATEWAY, "PAY001", "결제 처리 중 오류가 발생했습니다."),
   DUPLICATE_PAYMENT(HttpStatus.CONFLICT, "PAY002", "이미 처리된 결제입니다."),
   PAYMENT_AMOUNT_MISMATCH(HttpStatus.BAD_REQUEST, "PAY003", "결제 금액이 주문 금액과 다릅니다."),
+
+  // Upload
+  EMPTY_FILE(HttpStatus.BAD_REQUEST, "U001", "파일이 비어 있습니다."),
+  INVALID_FILE_TYPE(HttpStatus.BAD_REQUEST, "U002", "허용되지 않는 파일 형식입니다."),
+  FILE_TOO_LARGE(HttpStatus.PAYLOAD_TOO_LARGE, "U003", "파일 크기가 너무 큽니다."),
+  FILE_STORAGE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "U004", "파일 저장에 실패했습니다."),
+
+  // Pet
+  PET_NOT_FOUND(HttpStatus.NOT_FOUND, "PET001", "존재하지 않는 펫입니다."),
 
   // Common
   INVALID_REQUEST(HttpStatus.BAD_REQUEST, "C001", "입력값이 올바르지 않습니다."),

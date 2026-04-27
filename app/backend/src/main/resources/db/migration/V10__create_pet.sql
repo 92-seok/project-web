@@ -1,0 +1,14 @@
+CREATE TABLE pet (
+    id          BIGINT NOT NULL AUTO_INCREMENT,
+    member_id   BIGINT NOT NULL,
+    name        VARCHAR(50) NOT NULL,
+    type        VARCHAR(20) NOT NULL COMMENT 'DOG, CAT, BIRD, FISH, REPTILE, SMALL',
+    age         INT DEFAULT NULL COMMENT '나이(년) — 선택',
+    image_url   VARCHAR(500) DEFAULT NULL,
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT pk_pet         PRIMARY KEY (id),
+    CONSTRAINT fk_pet_member  FOREIGN KEY (member_id) REFERENCES member(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='회원 반려동물';
+
+CREATE INDEX idx_pet_member_id ON pet(member_id);
