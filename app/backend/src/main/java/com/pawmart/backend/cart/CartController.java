@@ -36,8 +36,7 @@ public class CartController {
 
   @PostMapping
   public ResponseEntity<Void> addItem(
-      @AuthenticationPrincipal JwtPrincipal principal,
-      @Valid @RequestBody AddCartRequest request) {
+      @AuthenticationPrincipal JwtPrincipal principal, @Valid @RequestBody AddCartRequest request) {
     cartService.addItem(principal.memberId(), request);
     return ResponseEntity.created(URI.create("/api/cart")).build();
   }
@@ -53,8 +52,7 @@ public class CartController {
 
   @DeleteMapping("/{itemId}")
   public ResponseEntity<Void> removeItem(
-      @AuthenticationPrincipal JwtPrincipal principal,
-      @PathVariable Long itemId) {
+      @AuthenticationPrincipal JwtPrincipal principal, @PathVariable Long itemId) {
     cartService.removeItem(principal.memberId(), itemId);
     return ResponseEntity.noContent().build();
   }

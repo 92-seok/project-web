@@ -39,25 +39,29 @@ public class ReviewService {
     }
 
     Pageable pageable = PageRequest.of(page, size);
-    Page<Review> reviewPage = reviewRepository.findByProductIdOrderByCreatedAtDesc(productId, pageable);
+    Page<Review> reviewPage =
+        reviewRepository.findByProductIdOrderByCreatedAtDesc(productId, pageable);
 
-    Set<Long> memberIds = reviewPage.getContent().stream()
-        .map(Review::getMemberId)
-        .collect(Collectors.toSet());
+    Set<Long> memberIds =
+        reviewPage.getContent().stream().map(Review::getMemberId).collect(Collectors.toSet());
 
-    Map<Long, String> memberNameMap = memberRepository.findAllById(memberIds).stream()
-        .collect(Collectors.toMap(Member::getId, Member::getName));
+    Map<Long, String> memberNameMap =
+        memberRepository.findAllById(memberIds).stream()
+            .collect(Collectors.toMap(Member::getId, Member::getName));
 
-    List<ReviewResponse> responses = reviewPage.getContent().stream()
-        .map(r -> new ReviewResponse(
-            r.getId(),
-            r.getMemberId(),
-            maskName(memberNameMap.getOrDefault(r.getMemberId(), "알 수 없음")),
-            r.getRating(),
-            r.getContent(),
-            r.getCreatedAt()
-        ))
-        .toList();
+    List<ReviewResponse> responses =
+        reviewPage.getContent().stream()
+            .map(
+                r ->
+                    new ReviewResponse(
+                        r.getId(),
+                        r.getMemberId(),
+                        maskName(memberNameMap.getOrDefault(r.getMemberId(), "알 수 없음")),
+                        r.getRating(),
+                        r.getContent(),
+                        r.getImageUrls(),
+                        r.getCreatedAt()))
+            .toList();
 
     double avgRating = reviewRepository.findAvgRatingByProductId(productId).orElse(0.0);
     long totalCount = reviewRepository.countByProductId(productId);
@@ -69,8 +73,7 @@ public class ReviewService {
         reviewPage.getNumber(),
         reviewPage.getSize(),
         reviewPage.getTotalPages(),
-        reviewPage.isLast()
-    );
+        reviewPage.isLast());
   }
 
   @Transactional
@@ -82,12 +85,14 @@ public class ReviewService {
       throw new BusinessException(ErrorCode.DUPLICATE_REVIEW);
     }
 
-    Review review = Review.builder()
-        .productId(productId)
-        .memberId(memberId)
-        .rating(request.rating())
-        .content(request.content())
-        .build();
+    Review review =
+        Review.builder()
+            .productId(productId)
+            .memberId(memberId)
+            .rating(request.rating())
+            .content(request.content())
+            .imageUrls(request.imageUrls())
+            .build();
 
     Long reviewId = reviewRepository.save(review).getId();
     updateProductStats(productId);
@@ -96,8 +101,10 @@ public class ReviewService {
 
   @Transactional
   public void deleteReview(Long memberId, Long reviewId) {
-    Review review = reviewRepository.findByIdAndMemberId(reviewId, memberId)
-        .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+    Review review =
+        reviewRepository
+            .findByIdAndMemberId(reviewId, memberId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
 
     Long productId = review.getProductId();
     reviewRepository.delete(review);
@@ -107,9 +114,12 @@ public class ReviewService {
   private void updateProductStats(Long productId) {
     double avg = reviewRepository.findAvgRatingByProductId(productId).orElse(0.0);
     long count = reviewRepository.countByProductId(productId);
-    productRepository.findById(productId).ifPresent(p ->
-        p.updateStats(BigDecimal.valueOf(avg).setScale(2, RoundingMode.HALF_UP), (int) count)
-    );
+    productRepository
+        .findById(productId)
+        .ifPresent(
+            p ->
+                p.updateStats(
+                    BigDecimal.valueOf(avg).setScale(2, RoundingMode.HALF_UP), (int) count));
   }
 
   private String maskName(String name) {

@@ -22,11 +22,12 @@ public class ProductController {
   public ProductPageResponse getProducts(
       @RequestParam(required = false) String petType,
       @RequestParam(required = false) String category,
+      @RequestParam(required = false) String badge,
       @RequestParam(required = false) String keyword,
       @RequestParam(defaultValue = "best") String sort,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "20") int size) {
-    return productService.getProducts(petType, category, keyword, sort, page, size);
+    return productService.getProducts(petType, category, badge, keyword, sort, page, size);
   }
 
   @GetMapping("/{id}")

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, Plus, Pencil, Trash2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { adminApi } from '@/api/adminApi';
+import { ImageUploader } from '@/components/common/ImageUploader';
 import type { ICreateProductRequest } from '@/api/adminApi';
 import type { IProductSummary } from '@/api/productApi';
 
@@ -155,8 +156,25 @@ function ProductModal({ initial, onClose, onSave }: IProductModalProps) {
           </div>
 
           <div>
-            <label className={labelCls}>이미지 URL *</label>
-            <input name='imageUrl' value={form.imageUrl} onChange={handleChange} className={inputCls} />
+            <label className={labelCls}>상품 이미지 *</label>
+            <ImageUploader
+              value={form.imageUrl ? [form.imageUrl] : []}
+              onChange={(urls) =>
+                setForm((prev) => ({ ...prev, imageUrl: urls[0] ?? '' }))
+              }
+              maxCount={1}
+              subDir='product'
+              size='lg'
+              helperText='jpg/png/webp/gif · 10MB 이하 · 정사각형 권장'
+            />
+            {/* 외부 URL 직접 입력도 허용 (Unsplash 등 큐레이션 이미지 활용) */}
+            <input
+              name='imageUrl'
+              value={form.imageUrl}
+              onChange={handleChange}
+              placeholder='또는 외부 이미지 URL 직접 입력'
+              className={`${inputCls} mt-2 text-xs`}
+            />
           </div>
 
           <div>

@@ -5,7 +5,8 @@ interface IImageGalleryProps {
   name: string;
 }
 
-const FALLBACK = 'https://placedog.net/1200/1200?id=42';
+// 외부 이미지 로드 실패 시 폴백 — 안정적인 Unsplash 큐레이션
+const FALLBACK = 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1200&q=80&auto=format&fit=crop';
 
 export function ImageGallery({ imageUrl, name }: IImageGalleryProps) {
   const [selected, setSelected] = useState(0);

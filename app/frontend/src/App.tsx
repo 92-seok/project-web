@@ -16,6 +16,7 @@ import { MyPage } from '@/pages/MyPage';
 import { WishlistPage } from '@/pages/WishlistPage';
 import { OrderListPage } from '@/pages/OrderListPage';
 import { ProfileEditPage } from '@/pages/ProfileEditPage';
+import { PetManagePage } from '@/pages/PetManagePage';
 import { SearchPage } from '@/pages/SearchPage';
 import { CareGuidePage } from '@/pages/CareGuidePage';
 import { CareGuideDetailPage } from '@/pages/CareGuideDetailPage';
@@ -25,42 +26,39 @@ import { PaymentFailPage } from '@/pages/PaymentFailPage';
 import { PrivateRoute } from '@/components/PrivateRoute';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import './App.css';
 
 function App() {
   return (
     <ErrorBoundary>
+      <ScrollToTop />
       <Routes>
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignUpPage />} />
+        {/* 메인 / 상품 / 검색 — 비로그인도 둘러볼 수 있음 */}
         <Route
           path='/'
           element={
-            <PrivateRoute>
-              <AppLayout>
-                <HomePage />
-              </AppLayout>
-            </PrivateRoute>
+            <AppLayout>
+              <HomePage />
+            </AppLayout>
           }
         />
         <Route
           path='/products'
           element={
-            <PrivateRoute>
-              <AppLayout>
-                <ProductListPage />
-              </AppLayout>
-            </PrivateRoute>
+            <AppLayout>
+              <ProductListPage />
+            </AppLayout>
           }
         />
         <Route
           path='/products/:id'
           element={
-            <PrivateRoute>
-              <AppLayout>
-                <ProductDetailPage />
-              </AppLayout>
-            </PrivateRoute>
+            <AppLayout>
+              <ProductDetailPage />
+            </AppLayout>
           }
         />
         <Route
@@ -134,13 +132,21 @@ function App() {
           }
         />
         <Route
-          path='/search'
+          path='/mypage/pets'
           element={
             <PrivateRoute>
               <AppLayout>
-                <SearchPage />
+                <PetManagePage />
               </AppLayout>
             </PrivateRoute>
+          }
+        />
+        <Route
+          path='/search'
+          element={
+            <AppLayout>
+              <SearchPage />
+            </AppLayout>
           }
         />
         {/* 케어 가이드 — 공개 콘텐츠 (PrivateRoute 불필요) */}

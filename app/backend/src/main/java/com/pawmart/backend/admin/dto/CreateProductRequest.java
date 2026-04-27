@@ -12,5 +12,4 @@ public record CreateProductRequest(
     String badge,
     @NotBlank String category,
     @NotBlank String petType,
-    @Min(0) int stock
-) {}
+    @Min(0) int stock) {}

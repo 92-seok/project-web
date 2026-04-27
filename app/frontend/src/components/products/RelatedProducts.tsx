@@ -9,7 +9,7 @@ interface IRelatedProductsProps {
 
 function RelatedSkeleton() {
   return (
-    <div className='grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8'>
+    <div className='grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8'>
       {Array.from({ length: 4 }).map((_, i) => (
         <div key={i}>
           <Skeleton className='aspect-square bg-muted mb-3 rounded-none' />
@@ -26,7 +26,7 @@ export function RelatedProducts({ currentId, category }: IRelatedProductsProps) 
 
   if (isLoading) {
     return (
-      <section className='px-4 md:px-8 py-12 border-t'>
+      <section className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-12 border-t'>
         <div className='flex items-center gap-4 mb-8'>
           <div className='h-px flex-1 bg-border' />
           <h2 className='text-sm font-black tracking-[0.2em] uppercase'>Related Products</h2>
@@ -45,13 +45,13 @@ export function RelatedProducts({ currentId, category }: IRelatedProductsProps) 
   if (related.length === 0) return null;
 
   return (
-    <section className='px-4 md:px-8 py-12 border-t'>
+    <section className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-12 border-t'>
       <div className='flex items-center gap-4 mb-8'>
         <div className='h-px flex-1 bg-border' />
         <h2 className='text-sm font-black tracking-[0.2em] uppercase'>Related Products</h2>
         <div className='h-px flex-1 bg-border' />
       </div>
-      <div className='grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8'>
+      <div className='grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8'>
         {related.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}

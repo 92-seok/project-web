@@ -21,6 +21,7 @@ export type SortOption = 'popular' | 'newest' | 'price-asc' | 'price-desc' | 'ra
 
 export interface IFilterState {
   pet: string[];
+  category: string[];
   badge: string[];
   priceMax: number;
   sort: SortOption;

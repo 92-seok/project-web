@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Star, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
+import { ImageUploader } from '@/components/common/ImageUploader';
 import { useAuthStore } from '@/store/authStore';
 import { reviewApi, type IReviewItem, type IReviewPage } from '@/api/reviewApi';
 import type { IProductDetail } from '@/types/product';
@@ -92,6 +93,7 @@ export function ProductTabs({ product }: IProductTabsProps) {
   // 리뷰 작성 폼 상태
   const [formRating, setFormRating] = useState(5);
   const [formContent, setFormContent] = useState('');
+  const [formImageUrls, setFormImageUrls] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasMyReview, setHasMyReview] = useState(false);
 
@@ -138,10 +140,11 @@ export function ProductTabs({ product }: IProductTabsProps) {
 
     setIsSubmitting(true);
     try {
-      await reviewApi.createReview(product.id, formRating, formContent.trim());
+      await reviewApi.createReview(product.id, formRating, formContent.trim(), formImageUrls);
       toast.success('리뷰가 등록되었습니다');
       setFormContent('');
       setFormRating(5);
+      setFormImageUrls([]);
       setHasMyReview(true);
       setCurrentPage(0);
       await fetchReviews(0);
@@ -197,16 +200,18 @@ export function ProductTabs({ product }: IProductTabsProps) {
         </button>
       </div>
 
-      {/* 상세정보 탭 */}
+      {/* 상세정보 탭 — 본문 가독성 위해 폭 제한 */}
       {activeTab === 'detail' && (
-        <div className='space-y-6'>
-          <p className='text-sm leading-relaxed text-muted-foreground'>{product.description}</p>
+        <div className='max-w-3xl space-y-6'>
+          <p className='text-sm md:text-base leading-relaxed text-muted-foreground'>
+            {product.description}
+          </p>
           <div>
             <p className='text-[11px] tracking-[0.2em] font-bold uppercase mb-3'>주요 특징</p>
             <ul className='space-y-2'>
               {product.features.map((f, i) => (
-                <li key={i} className='flex items-start gap-3 text-sm'>
-                  <span className='mt-[7px] w-1.5 h-1.5 bg-foreground shrink-0 block' />
+                <li key={i} className='flex items-start gap-3 text-sm md:text-base'>
+                  <span className='mt-[7px] md:mt-[9px] w-1.5 h-1.5 bg-foreground shrink-0 block' />
                   {f}
                 </li>
               ))}
@@ -265,6 +270,17 @@ export function ProductTabs({ product }: IProductTabsProps) {
                 rows={4}
                 className='w-full border bg-background px-3 py-2 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-foreground'
               />
+              {/* 사진 첨부 — 최대 3장 */}
+              <div className='space-y-2'>
+                <p className='text-xs text-muted-foreground'>사진 첨부 (선택)</p>
+                <ImageUploader
+                  value={formImageUrls}
+                  onChange={setFormImageUrls}
+                  maxCount={3}
+                  subDir='review'
+                  size='sm'
+                />
+              </div>
               <button
                 type='submit'
                 disabled={isSubmitting}
@@ -318,6 +334,27 @@ export function ProductTabs({ product }: IProductTabsProps) {
                     )}
                   </div>
                   <p className='text-sm leading-relaxed'>{review.content}</p>
+                  {/* 첨부 이미지 */}
+                  {review.imageUrls && review.imageUrls.length > 0 && (
+                    <div className='flex flex-wrap gap-2 mt-3'>
+                      {review.imageUrls.map((url, i) => (
+                        <a
+                          key={url + i}
+                          href={url}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='block w-32 h-32 rounded-lg overflow-hidden bg-secondary hover:opacity-80 transition-opacity'
+                        >
+                          <img
+                            src={url}
+                            alt={`리뷰 이미지 ${i + 1}`}
+                            loading='lazy'
+                            className='w-full h-full object-cover'
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -352,7 +389,7 @@ export function ProductTabs({ product }: IProductTabsProps) {
 
       {/* 배송/반품 탭 */}
       {activeTab === 'shipping' && (
-        <div className='space-y-4 text-sm'>
+        <div className='max-w-3xl space-y-5 text-sm md:text-base'>
           {SHIPPING_SECTIONS.map((section) => (
             <div key={section.title}>
               <p className='text-[11px] tracking-[0.2em] font-bold uppercase mb-2'>

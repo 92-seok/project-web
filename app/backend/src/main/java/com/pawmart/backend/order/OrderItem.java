@@ -45,7 +45,8 @@ public class OrderItem {
   private int quantity;
 
   @Builder
-  private OrderItem(Order order, Long productId, String name, int price, String imageUrl, int quantity) {
+  private OrderItem(
+      Order order, Long productId, String name, int price, String imageUrl, int quantity) {
     this.order = order;
     this.productId = productId;
     this.name = name;

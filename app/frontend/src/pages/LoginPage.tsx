@@ -67,7 +67,7 @@ export function LoginPage() {
           <p className='mt-1.5 text-sm text-muted-foreground'>우리 아이의 건강한 한 끼</p>
         </div>
 
-        <div className='w-full max-w-sm'>
+        <div className='w-full max-w-sm lg:max-w-md'>
           <div className='mb-7'>
             <h2 className='font-editorial text-2xl font-bold text-foreground'>로그인</h2>
             <p className='mt-1.5 text-sm text-muted-foreground'>오랜만이에요, 다시 만나서 반가워요</p>

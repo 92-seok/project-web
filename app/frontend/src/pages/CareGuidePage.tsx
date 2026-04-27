@@ -100,7 +100,7 @@ export function CareGuidePage() {
   return (
     <div className='bg-background min-h-screen'>
       {/* 헤더 섹션 */}
-      <section className='pt-14 pb-10 px-4 md:px-8 max-w-screen-xl mx-auto text-center'>
+      <section className='pt-14 pb-10 px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto text-center'>
         <p className='text-[11px] tracking-[0.3em] font-semibold uppercase text-accent mb-3'>
           EDITORIAL
         </p>
@@ -111,7 +111,7 @@ export function CareGuidePage() {
       </section>
 
       {/* 필터 영역 */}
-      <section className='px-4 md:px-8 max-w-screen-xl mx-auto mb-10'>
+      <section className='px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto mb-10'>
         {/* 태그 탭 */}
         <div className='flex flex-wrap items-center gap-2 mb-4'>
           {TAG_FILTERS.map((tag) => (
@@ -154,7 +154,7 @@ export function CareGuidePage() {
       </section>
 
       {/* 가이드 그리드 */}
-      <section className='px-4 md:px-8 max-w-screen-xl mx-auto pb-20'>
+      <section className='px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto pb-20'>
         {filtered.length === 0 ? (
           <div className='py-20 text-center text-muted-foreground'>
             <p className='text-lg'>해당하는 가이드가 없습니다.</p>

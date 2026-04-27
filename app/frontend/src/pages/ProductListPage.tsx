@@ -10,6 +10,7 @@ import type { IFilterState, SortOption } from '@/types/product';
 
 const DEFAULT_FILTER: IFilterState = {
   pet: [],
+  category: [],
   badge: [],
   priceMax: 0,
   sort: 'popular',
@@ -31,6 +32,7 @@ export function ProductListPage() {
 
   const [filter, setFilter] = useState<IFilterState>({
     pet: searchParams.get('pet') ? [searchParams.get('pet')!] : [],
+    category: searchParams.get('category') ? [searchParams.get('category')!] : [],
     badge: [],
     priceMax: 0,
     sort: (searchParams.get('sort') as SortOption) ?? 'popular',
@@ -39,10 +41,15 @@ export function ProductListPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [page, setPage] = useState(0);
 
+  // 백엔드 API 는 단일 값만 받으므로 다중 선택 시 첫 번째만 전달 (1개 선택일 때만 효과)
   const petType = filter.pet.length === 1 ? filter.pet[0] : undefined;
+  const category = filter.category.length === 1 ? filter.category[0] : undefined;
+  const badge = filter.badge.length === 1 ? filter.badge[0] : undefined;
 
   const { data, isLoading } = useProducts({
     petType,
+    category,
+    badge,
     sort: SORT_MAP[filter.sort],
     page,
     size: PAGE_SIZE,
@@ -52,7 +59,11 @@ export function ProductListPage() {
   const totalPages = data?.totalPages ?? 0;
   const totalElements = data?.totalElements ?? 0;
 
-  const activeFilterCount = filter.pet.length + filter.badge.length + (filter.priceMax > 0 ? 1 : 0);
+  const activeFilterCount =
+    filter.pet.length +
+    filter.category.length +
+    filter.badge.length +
+    (filter.priceMax > 0 ? 1 : 0);
 
   const handleResetFilter = () => {
     setFilter({ ...DEFAULT_FILTER, sort: filter.sort });
@@ -67,25 +78,27 @@ export function ProductListPage() {
   return (
     <div className='min-h-screen'>
       {/* 페이지 헤더 */}
-      <div className='border-b border-border px-4 md:px-8 py-8 bg-secondary/30'>
-        <p className='text-[11px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
-          ALL PRODUCTS
-        </p>
-        <div className='flex items-end justify-between'>
-          <h1 className='font-editorial text-3xl md:text-[2.25rem] font-bold tracking-tight'>
-            전체 상품
-          </h1>
-          <span className='text-sm text-muted-foreground'>
-            {isLoading ? '...' : (
-              <>
-                <span className='font-semibold text-foreground'>{totalElements}</span>개의 상품
-              </>
-            )}
-          </span>
+      <div className='border-b border-border bg-secondary/30'>
+        <div className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-8'>
+          <p className='text-[11px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
+            ALL PRODUCTS
+          </p>
+          <div className='flex items-end justify-between'>
+            <h1 className='font-editorial text-3xl md:text-[2.25rem] lg:text-[2.5rem] font-bold tracking-tight'>
+              전체 상품
+            </h1>
+            <span className='text-sm text-muted-foreground'>
+              {isLoading ? '...' : (
+                <>
+                  <span className='font-semibold text-foreground'>{totalElements}</span>개의 상품
+                </>
+              )}
+            </span>
+          </div>
         </div>
       </div>
 
-      <div className='flex gap-8 px-4 md:px-8 py-8'>
+      <div className='max-w-[1440px] mx-auto flex gap-8 lg:gap-10 px-4 md:px-8 lg:px-12 py-10'>
         {/* 데스크톱 필터 사이드바 */}
         <FilterSidebar
           filter={filter}

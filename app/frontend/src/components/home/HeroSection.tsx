@@ -12,38 +12,42 @@ interface ISlide {
   cta: string;
   ctaHref: string;
   align: 'left' | 'right';
+  objectPosition?: string;
 }
 
 const SLIDES: ISlide[] = [
   {
-    imageUrl: unsplash(UNSPLASH_PHOTOS.dogWithBowl, 1920),
-    fallbackUrl: 'https://placedog.net/1920/1080?id=42',
+    imageUrl: unsplash(UNSPLASH_PHOTOS.dogWithBowl, 2400),
+    fallbackUrl: unsplash(UNSPLASH_PHOTOS.dogWithBowl, 1920),
     eyebrow: 'EVERYDAY WELLNESS',
     title: '오늘도 건강한\n한 끼를 시작해요',
     subtitle: '수의사가 검증한 프리미엄 영양식, 내일 새벽 문 앞으로',
     cta: '둘러보기',
     ctaHref: '/products',
     align: 'left',
+    objectPosition: '70% center',
   },
   {
-    imageUrl: unsplash(UNSPLASH_PHOTOS.catCloseup, 1920),
-    fallbackUrl: 'https://placekitten.com/1920/1080',
+    imageUrl: unsplash(UNSPLASH_PHOTOS.catCloseup, 2400),
+    fallbackUrl: unsplash(UNSPLASH_PHOTOS.catCloseup, 1920),
     eyebrow: 'WEEKLY DEALS',
     title: '이번 주만\n최대 30% 할인',
     subtitle: '정기배송 가입 시 -10% 추가 — 언제든 해지 가능',
     cta: '특가 보러가기',
     ctaHref: '/products?sort=sale',
     align: 'right',
+    objectPosition: '30% center',
   },
   {
-    imageUrl: unsplash(UNSPLASH_PHOTOS.goldenRetriever, 1920),
-    fallbackUrl: 'https://placedog.net/1920/1080?id=18',
+    imageUrl: unsplash(UNSPLASH_PHOTOS.goldenRetriever, 2400),
+    fallbackUrl: unsplash(UNSPLASH_PHOTOS.goldenRetriever, 1920),
     eyebrow: 'BREED CARE',
     title: '내 아이에게\n딱 맞는 영양',
     subtitle: '견종·묘종별 라이프스테이지 맞춤 큐레이션',
     cta: '맞춤 추천 받기',
     ctaHref: '/products?sort=breed',
     align: 'left',
+    objectPosition: '65% 35%',
   },
 ];
 
@@ -64,7 +68,15 @@ export function HeroSection() {
   const isLeft = slide.align === 'left';
 
   return (
-    <div className='relative aspect-[4/5] sm:aspect-[16/9] md:aspect-[21/9] max-h-[640px] overflow-hidden md:rounded-2xl md:mx-4 md:mt-4 lg:mx-8 bg-secondary'>
+    <div
+      className='
+        relative overflow-hidden bg-secondary
+        aspect-[4/5] sm:aspect-[16/9]
+        lg:aspect-auto lg:h-[480px] xl:h-[560px] 2xl:h-[640px]
+        md:rounded-2xl md:mx-4 md:mt-4 lg:mx-8
+        max-w-[1440px] xl:mx-auto
+      '
+    >
       {/* 배경 이미지 — Unsplash 큐레이션, 깨지면 placedog/placekitten으로 폴백 */}
       <img
         key={currentIndex}
@@ -75,6 +87,7 @@ export function HeroSection() {
           const img = e.currentTarget;
           if (img.src !== slide.fallbackUrl) img.src = slide.fallbackUrl;
         }}
+        style={{ objectPosition: slide.objectPosition ?? 'center' }}
         className='absolute inset-0 w-full h-full object-cover animate-in fade-in duration-700 motion-reduce:animate-none'
       />
 

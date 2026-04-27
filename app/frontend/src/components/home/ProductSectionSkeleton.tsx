@@ -11,7 +11,7 @@ export function ProductSectionSkeleton({ title, count = 8 }: IProductSectionSkel
       <div className='flex items-center justify-between mb-6 border-b-2 border-primary pb-3'>
         <h2 className='text-lg font-black tracking-tight'>{title}</h2>
       </div>
-      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8'>
+      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8'>
         {Array.from({ length: count }).map((_, i) => (
           <div key={i}>
             <Skeleton className='aspect-square bg-muted mb-3 rounded-none' />

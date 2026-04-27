@@ -1,6 +1,7 @@
 package com.pawmart.backend.review.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record ReviewResponse(
     Long id,
@@ -8,5 +9,5 @@ public record ReviewResponse(
     String memberName,
     int rating,
     String content,
-    LocalDateTime createdAt
-) {}
+    List<String> imageUrls,
+    LocalDateTime createdAt) {}

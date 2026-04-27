@@ -12,8 +12,7 @@ public record AdminMemberResponse(
     String phone,
     String role,
     String status,
-    LocalDateTime createdAt
-) {
+    LocalDateTime createdAt) {
 
   public static AdminMemberResponse from(Member m) {
     return new AdminMemberResponse(
@@ -24,7 +23,6 @@ public record AdminMemberResponse(
         m.getPhone(),
         m.getRole().name(),
         m.getStatus().name(),
-        m.getCreatedAt()
-    );
+        m.getCreatedAt());
   }
 }

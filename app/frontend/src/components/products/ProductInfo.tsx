@@ -61,7 +61,7 @@ export function ProductInfo({ product }: IProductInfoProps) {
       </div>
 
       {/* 상품명 */}
-      <h1 className='font-editorial text-2xl md:text-[1.75rem] font-bold tracking-tight leading-snug text-foreground'>
+      <h1 className='font-editorial text-2xl md:text-[1.75rem] lg:text-[2rem] font-bold tracking-tight leading-snug text-foreground'>
         {product.name}
       </h1>
 
@@ -98,9 +98,9 @@ export function ProductInfo({ product }: IProductInfoProps) {
             <span className='text-sm font-bold text-accent'>{discountRate}% 할인</span>
           </div>
         )}
-        <p className='font-editorial text-3xl md:text-[2rem] font-bold tracking-tight text-foreground'>
+        <p className='font-editorial text-3xl md:text-[2rem] lg:text-[2.5rem] font-bold tracking-tight text-foreground leading-tight'>
           {product.price.toLocaleString('ko-KR')}
-          <span className='text-base font-sans font-medium text-muted-foreground ml-1'>원</span>
+          <span className='text-base lg:text-lg font-sans font-medium text-muted-foreground ml-1'>원</span>
         </p>
       </div>
 

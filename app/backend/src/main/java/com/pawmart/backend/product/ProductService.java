@@ -26,6 +26,7 @@ public class ProductService {
   public ProductPageResponse getProducts(
       String petType,
       String category,
+      String badge,
       String keyword,
       String sort,
       int page,
@@ -46,6 +47,7 @@ public class ProductService {
             ProductStatus.ON_SALE,
             StringUtils.hasText(petType) ? petType : null,
             StringUtils.hasText(category) ? category : null,
+            StringUtils.hasText(badge) ? badge : null,
             StringUtils.hasText(keyword) ? keyword : null,
             pageable);
 

@@ -29,7 +29,7 @@ const TONE_BG: Record<IQuickLink['tone'], string> = {
 
 export function CategoryQuickLinks() {
   return (
-    <div className='grid grid-cols-6 gap-3 md:gap-5'>
+    <div className='grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-5'>
       {QUICK_LINKS.map(({ id, label, Icon, href, tone }) => (
         <Link
           key={id}

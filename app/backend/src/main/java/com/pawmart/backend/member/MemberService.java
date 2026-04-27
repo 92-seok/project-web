@@ -77,12 +77,18 @@ public class MemberService {
       throw new BusinessException(ErrorCode.INACTIVE_MEMBER);
     }
 
-    String accessToken = jwtUtil.generateAccessToken(member.getId(), member.getLoginId(), member.getName(), member.getRole());
+    String accessToken =
+        jwtUtil.generateAccessToken(
+            member.getId(), member.getLoginId(), member.getName(), member.getRole());
     String refreshToken = jwtUtil.generateRefreshToken(member.getId());
 
     return new LoginResponse(
-        member.getId(), member.getLoginId(), member.getName(), member.getRole(),
-        accessToken, refreshToken);
+        member.getId(),
+        member.getLoginId(),
+        member.getName(),
+        member.getRole(),
+        accessToken,
+        refreshToken);
   }
 
   public RefreshResponse refresh(RefreshRequest request) {

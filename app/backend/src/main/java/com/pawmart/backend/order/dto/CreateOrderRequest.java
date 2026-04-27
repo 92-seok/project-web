@@ -15,10 +15,6 @@ public record CreateOrderRequest(
     @NotBlank String postalCode,
     @NotBlank String roadAddress,
     String detailAddress,
-    String deliveryMemo
-) {
-  public record OrderItemRequest(
-      @NotNull Long productId,
-      @Min(1) int quantity
-  ) {}
+    String deliveryMemo) {
+  public record OrderItemRequest(@NotNull Long productId, @Min(1) int quantity) {}
 }

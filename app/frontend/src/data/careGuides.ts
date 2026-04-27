@@ -24,7 +24,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'all',
     title: '연령별 사료, 어떻게 골라야 할까',
     desc: '강아지·고양이의 라이프스테이지에 맞는 영양 균형 잡기. 퍼피부터 시니어까지 연령별 맞춤 영양 가이드를 확인하세요.',
-    imageUrl: 'https://picsum.photos/seed/guide1/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=800&q=80&auto=format&fit=crop',
     readTime: 7,
     publishedAt: '2026-04-10',
     content: [
@@ -75,7 +75,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'all',
     title: '환절기 알러지 케어 체크리스트',
     desc: '봄·가을 환절기, 미세먼지와 꽃가루로부터 우리 아이를 지키는 실전 알러지 케어 방법을 알아보세요.',
-    imageUrl: 'https://picsum.photos/seed/guide2/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1535930891776-0c2dfb7fda1a?w=800&q=80&auto=format&fit=crop',
     readTime: 5,
     publishedAt: '2026-04-08',
     content: [
@@ -126,7 +126,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'all',
     title: '하루 10분, 덴탈 케어 습관',
     desc: '매일의 작은 케어가 만드는 큰 차이. 치주 질환 예방을 위한 단계별 양치 습관 만들기 가이드.',
-    imageUrl: 'https://picsum.photos/seed/guide3/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&q=80&auto=format&fit=crop',
     readTime: 6,
     publishedAt: '2026-04-05',
     content: [
@@ -181,7 +181,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'dog',
     title: '노령견을 위한 관절 케어 가이드',
     desc: '7세 이상 시니어 강아지의 관절 건강을 지키는 운동법, 영양 관리, 환경 개선 방법을 총정리했습니다.',
-    imageUrl: 'https://picsum.photos/seed/guide4/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1612637968894-660373e23b03?w=800&q=80&auto=format&fit=crop',
     readTime: 8,
     publishedAt: '2026-04-02',
     content: [
@@ -237,7 +237,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'cat',
     title: '고양이 수분 섭취 늘리는 5가지 방법',
     desc: '고양이는 선천적으로 물을 잘 마시지 않아 신장 질환 위험이 높습니다. 수분 섭취를 자연스럽게 늘리는 실용적인 방법들을 소개합니다.',
-    imageUrl: 'https://picsum.photos/seed/guide5/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800&q=80&auto=format&fit=crop',
     readTime: 5,
     publishedAt: '2026-03-28',
     content: [
@@ -291,7 +291,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'all',
     title: '여름철 반려동물 열사병 예방법',
     desc: '기온이 높아지는 여름, 반려동물은 사람보다 훨씬 빠르게 체온이 오릅니다. 열사병의 징후와 응급 처치, 예방법을 알아두세요.',
-    imageUrl: 'https://picsum.photos/seed/guide6/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80&auto=format&fit=crop',
     readTime: 6,
     publishedAt: '2026-03-25',
     content: [
@@ -343,7 +343,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'dog',
     title: '강아지 기초 훈련, 이렇게 시작하세요',
     desc: '앉아, 기다려, 이리와 — 기초 명령어부터 하우스 트레이닝까지. 긍정 강화 훈련법으로 즐겁게 시작하는 퍼피 교육 가이드.',
-    imageUrl: 'https://picsum.photos/seed/guide7/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=800&q=80&auto=format&fit=crop',
     readTime: 9,
     publishedAt: '2026-03-20',
     content: [
@@ -399,7 +399,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'all',
     title: '재밌는 셀프 그루밍 입문 가이드',
     desc: '브러싱부터 발톱 관리, 귀 청소까지. 집에서 즐겁게 할 수 있는 기본 그루밍 방법과 도구 선택 가이드.',
-    imageUrl: 'https://picsum.photos/seed/guide8/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=800&q=80&auto=format&fit=crop',
     readTime: 7,
     publishedAt: '2026-03-15',
     content: [
@@ -451,7 +451,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'cat',
     title: '실내 고양이의 적정 운동량 채우기',
     desc: '외출 없이도 충분히 움직이게 하는 실내 고양이 활동 루틴. 사냥 본능을 자극하는 놀이 방법과 환경 풍부화 아이디어.',
-    imageUrl: 'https://picsum.photos/seed/guide9/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=800&q=80&auto=format&fit=crop',
     readTime: 6,
     publishedAt: '2026-03-10',
     content: [
@@ -503,7 +503,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'all',
     title: '반려동물 장 건강 지키는 식이 습관',
     desc: '장은 제2의 뇌라고 불립니다. 반려동물의 소화 건강을 지키는 식이 원칙과 프로바이오틱스 활용법을 알아보세요.',
-    imageUrl: 'https://picsum.photos/seed/guide10/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=800&q=80&auto=format&fit=crop',
     readTime: 7,
     publishedAt: '2026-03-05',
     content: [
@@ -559,7 +559,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'all',
     title: '겨울철 발바닥 보호 완벽 가이드',
     desc: '제설 염화칼슘, 차가운 아스팔트, 건조한 실내 공기로부터 소중한 발바닥을 지키는 겨울철 케어 완벽 가이드.',
-    imageUrl: 'https://picsum.photos/seed/guide11/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80&auto=format&fit=crop',
     readTime: 5,
     publishedAt: '2026-02-28',
     content: [
@@ -611,7 +611,7 @@ export const CARE_GUIDES: ICareGuide[] = [
     petType: 'dog',
     title: '분리불안 강아지 케어 실전 가이드',
     desc: '혼자 있으면 짖고 울고, 물건을 망가뜨리는 분리불안. 원인 이해부터 단계적 둔감화 훈련까지 실용적인 해결책을 제시합니다.',
-    imageUrl: 'https://picsum.photos/seed/guide12/800/500',
+    imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=800&q=80&auto=format&fit=crop',
     readTime: 10,
     publishedAt: '2026-02-20',
     content: [

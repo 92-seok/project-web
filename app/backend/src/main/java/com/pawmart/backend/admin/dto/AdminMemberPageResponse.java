@@ -8,5 +8,4 @@ public record AdminMemberPageResponse(
     int size,
     long totalElements,
     int totalPages,
-    boolean last
-) {}
+    boolean last) {}

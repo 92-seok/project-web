@@ -24,8 +24,8 @@ public class AdminProductService {
   private final ProductRepository productRepository;
 
   public ProductPageResponse getProducts(int page, int size) {
-    Page<Product> productPage = productRepository.findAll(
-        PageRequest.of(page, size, Sort.by("createdAt").descending()));
+    Page<Product> productPage =
+        productRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
 
     return new ProductPageResponse(
         productPage.getContent().stream().map(ProductSummaryResponse::from).toList(),
@@ -33,30 +33,31 @@ public class AdminProductService {
         productPage.getSize(),
         productPage.getTotalElements(),
         productPage.getTotalPages(),
-        productPage.isLast()
-    );
+        productPage.isLast());
   }
 
   @Transactional
   public Product createProduct(CreateProductRequest req) {
-    Product product = Product.create(
-        req.name(),
-        req.description(),
-        req.price(),
-        req.originalPrice(),
-        req.imageUrl(),
-        req.badge(),
-        req.category(),
-        req.petType(),
-        req.stock()
-    );
+    Product product =
+        Product.create(
+            req.name(),
+            req.description(),
+            req.price(),
+            req.originalPrice(),
+            req.imageUrl(),
+            req.badge(),
+            req.category(),
+            req.petType(),
+            req.stock());
     return productRepository.save(product);
   }
 
   @Transactional
   public void updateProduct(Long id, CreateProductRequest req) {
-    Product product = productRepository.findById(id)
-        .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+    Product product =
+        productRepository
+            .findById(id)
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
     product.adminUpdate(
         req.name(),
         req.description(),
@@ -66,14 +67,15 @@ public class AdminProductService {
         req.badge(),
         req.category(),
         req.petType(),
-        req.stock()
-    );
+        req.stock());
   }
 
   @Transactional
   public void deleteProduct(Long id) {
-    Product product = productRepository.findById(id)
-        .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
+    Product product =
+        productRepository
+            .findById(id)
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
     product.hide();
   }
 }

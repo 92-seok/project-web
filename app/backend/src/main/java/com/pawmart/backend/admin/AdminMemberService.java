@@ -35,13 +35,14 @@ public class AdminMemberService {
         memberPage.getSize(),
         memberPage.getTotalElements(),
         memberPage.getTotalPages(),
-        memberPage.isLast()
-    );
+        memberPage.isLast());
   }
 
   public AdminMemberResponse getMember(Long id) {
-    Member member = memberRepository.findById(id)
-        .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+    Member member =
+        memberRepository
+            .findById(id)
+            .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
     return AdminMemberResponse.from(member);
   }
 }

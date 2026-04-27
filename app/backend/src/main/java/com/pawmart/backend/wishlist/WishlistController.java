@@ -25,15 +25,13 @@ public class WishlistController {
 
   @PostMapping("/{productId}")
   public WishlistToggleResponse toggle(
-      @AuthenticationPrincipal JwtPrincipal principal,
-      @PathVariable Long productId) {
+      @AuthenticationPrincipal JwtPrincipal principal, @PathVariable Long productId) {
     return wishlistService.toggle(principal.memberId(), productId);
   }
 
   @GetMapping("/{productId}/status")
   public WishlistToggleResponse status(
-      @AuthenticationPrincipal JwtPrincipal principal,
-      @PathVariable Long productId) {
+      @AuthenticationPrincipal JwtPrincipal principal, @PathVariable Long productId) {
     return new WishlistToggleResponse(wishlistService.isWished(principal.memberId(), productId));
   }
 }

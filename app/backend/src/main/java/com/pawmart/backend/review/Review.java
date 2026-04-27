@@ -1,8 +1,11 @@
 package com.pawmart.backend.review;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +16,8 @@ import jakarta.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.pawmart.backend.common.converter.StringListJsonConverter;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -42,6 +47,12 @@ public class Review {
   @Column(columnDefinition = "TEXT")
   private String content;
 
+  // MariaDB 호환을 위해 JdbcTypeCode(JSON) 대신 Converter + LONGTEXT 사용.
+  // MariaDB의 JSON 타입은 LONGTEXT 별칭이라 컬럼은 그대로 두고 매핑만 교체.
+  @Convert(converter = StringListJsonConverter.class)
+  @Column(name = "image_urls", columnDefinition = "LONGTEXT")
+  private List<String> imageUrls = new ArrayList<>();
+
   @CreatedDate
   @Column(name = "created_at", nullable = false, updatable = false)
   private LocalDateTime createdAt;
@@ -51,15 +62,18 @@ public class Review {
   private LocalDateTime updatedAt;
 
   @Builder
-  private Review(Long productId, Long memberId, int rating, String content) {
+  private Review(
+      Long productId, Long memberId, int rating, String content, List<String> imageUrls) {
     this.productId = productId;
     this.memberId = memberId;
     this.rating = rating;
     this.content = content;
+    this.imageUrls = imageUrls != null ? imageUrls : new ArrayList<>();
   }
 
-  public void update(int rating, String content) {
+  public void update(int rating, String content, List<String> imageUrls) {
     this.rating = rating;
     this.content = content;
+    this.imageUrls = imageUrls != null ? imageUrls : new ArrayList<>();
   }
 }

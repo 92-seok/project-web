@@ -12,18 +12,18 @@ import { RelatedProducts } from '@/components/products/RelatedProducts';
 
 function ProductDetailSkeleton() {
   return (
-    <div>
-      <div className='px-4 md:px-8 py-4 border-b'>
+    <div className='max-w-[1440px] mx-auto'>
+      <div className='px-4 md:px-8 lg:px-12 py-4 border-b'>
         <Skeleton className='h-3 w-48 rounded-none' />
       </div>
-      <div className='px-4 md:px-8 py-8 md:grid md:grid-cols-2 md:gap-12'>
+      <div className='px-4 md:px-8 lg:px-12 py-10 md:grid md:grid-cols-[minmax(0,1fr)_440px] lg:grid-cols-[minmax(0,1fr)_520px] md:gap-10 lg:gap-16'>
         <Skeleton className='aspect-square rounded-none' />
         <div className='space-y-4 mt-6 md:mt-0'>
           <Skeleton className='h-4 w-24 rounded-none' />
-          <Skeleton className='h-8 w-3/4 rounded-none' />
+          <Skeleton className='h-10 w-3/4 rounded-none' />
           <Skeleton className='h-4 w-32 rounded-none' />
           <Skeleton className='h-px w-full rounded-none' />
-          <Skeleton className='h-8 w-1/3 rounded-none' />
+          <Skeleton className='h-10 w-1/3 rounded-none' />
           <div className='flex gap-3 pt-4'>
             <Skeleton className='flex-1 h-12 rounded-none' />
             <Skeleton className='flex-1 h-12 rounded-none' />
@@ -91,9 +91,9 @@ export function ProductDetailPage() {
   };
 
   return (
-    <div>
+    <div className='max-w-[1440px] mx-auto'>
       {/* 브레드크럼 */}
-      <div className='px-4 md:px-8 py-4 border-b border-border text-xs text-muted-foreground flex gap-2 items-center bg-secondary/30'>
+      <div className='px-4 md:px-8 lg:px-12 py-4 border-b border-border text-xs text-muted-foreground flex gap-2 items-center bg-secondary/30'>
         <Link to='/' className='hover:text-accent transition-colors'>
           홈
         </Link>
@@ -106,13 +106,13 @@ export function ProductDetailPage() {
       </div>
 
       {/* 메인 콘텐츠: 이미지 + 정보 */}
-      <div className='px-4 md:px-8 py-8 md:grid md:grid-cols-2 md:gap-12'>
+      <div className='px-4 md:px-8 lg:px-12 py-10 md:grid md:grid-cols-[minmax(0,1fr)_440px] lg:grid-cols-[minmax(0,1fr)_520px] md:gap-10 lg:gap-16'>
         <ImageGallery imageUrl={product.imageUrl} name={product.name} />
         <ProductInfo product={product} />
       </div>
 
       {/* 상세정보/리뷰 탭 */}
-      <div className='px-4 md:px-8 py-8 border-t'>
+      <div className='px-4 md:px-8 lg:px-12 py-10 border-t'>
         <ProductTabs product={product} />
       </div>
 

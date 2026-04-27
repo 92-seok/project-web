@@ -45,15 +45,13 @@ public class OrderController {
 
   @GetMapping("/{id}")
   public ResponseEntity<OrderDetailResponse> getOrder(
-      @AuthenticationPrincipal JwtPrincipal principal,
-      @PathVariable Long id) {
+      @AuthenticationPrincipal JwtPrincipal principal, @PathVariable Long id) {
     return ResponseEntity.ok(orderService.getOrder(id, principal.memberId()));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> cancelOrder(
-      @AuthenticationPrincipal JwtPrincipal principal,
-      @PathVariable Long id) {
+      @AuthenticationPrincipal JwtPrincipal principal, @PathVariable Long id) {
     orderService.cancelOrder(id, principal.memberId());
     return ResponseEntity.noContent().build();
   }

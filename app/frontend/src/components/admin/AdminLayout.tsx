@@ -108,8 +108,10 @@ export function AdminLayout() {
           </span>
         </header>
 
-        <main className='flex-1 p-6 overflow-auto'>
-          <Outlet />
+        <main className='flex-1 overflow-auto'>
+          <div className='max-w-[1440px] mx-auto p-6 lg:p-8 xl:p-10'>
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

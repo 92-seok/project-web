@@ -9,7 +9,7 @@ import { OrderSummary } from '@/components/cart/OrderSummary';
 
 function CartSkeleton() {
   return (
-    <div className='px-4 md:px-8 py-8 md:grid md:grid-cols-[1fr_320px] md:gap-12 md:items-start'>
+    <div className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-10 md:grid md:grid-cols-[minmax(0,1fr)_360px] lg:grid-cols-[minmax(0,1fr)_400px] md:gap-12 lg:gap-16 md:items-start'>
       <div className='space-y-0'>
         {[1, 2, 3].map((n) => (
           <div key={n} className='flex items-start gap-4 py-6 border-b'>
@@ -44,13 +44,15 @@ export function CartPage() {
   if (isLoading && items.length === 0) {
     return (
       <div className='min-h-screen'>
-        <div className='px-4 md:px-8 py-8 border-b border-border bg-secondary/30'>
-          <p className='text-[11px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
-            SHOPPING CART
-          </p>
-          <h1 className='font-editorial text-3xl md:text-[2.25rem] font-bold tracking-tight'>
-            장바구니
-          </h1>
+        <div className='border-b border-border bg-secondary/30'>
+          <div className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-8'>
+            <p className='text-[11px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
+              SHOPPING CART
+            </p>
+            <h1 className='font-editorial text-3xl md:text-[2.25rem] lg:text-[2.5rem] font-bold tracking-tight'>
+              장바구니
+            </h1>
+          </div>
         </div>
         <CartSkeleton />
       </div>
@@ -82,25 +84,27 @@ export function CartPage() {
 
   return (
     <div className='min-h-screen'>
-      <div className='px-4 md:px-8 py-8 border-b border-border bg-secondary/30'>
-        <p className='text-[11px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
-          SHOPPING CART
-        </p>
-        <div className='flex items-end justify-between'>
-          <h1 className='font-editorial text-3xl md:text-[2.25rem] font-bold tracking-tight'>
-            장바구니
-          </h1>
-          <button
-            onClick={() => clearCart()}
-            disabled={isLoading}
-            className='text-xs text-muted-foreground hover:text-accent underline underline-offset-2 disabled:opacity-50 transition-colors'
-          >
-            전체 삭제
-          </button>
+      <div className='border-b border-border bg-secondary/30'>
+        <div className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-8'>
+          <p className='text-[11px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
+            SHOPPING CART
+          </p>
+          <div className='flex items-end justify-between'>
+            <h1 className='font-editorial text-3xl md:text-[2.25rem] lg:text-[2.5rem] font-bold tracking-tight'>
+              장바구니
+            </h1>
+            <button
+              onClick={() => clearCart()}
+              disabled={isLoading}
+              className='text-xs text-muted-foreground hover:text-accent underline underline-offset-2 disabled:opacity-50 transition-colors'
+            >
+              전체 삭제
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className='px-4 md:px-8 py-8 md:grid md:grid-cols-[1fr_320px] md:gap-12 md:items-start'>
+      <div className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-10 md:grid md:grid-cols-[minmax(0,1fr)_360px] lg:grid-cols-[minmax(0,1fr)_400px] md:gap-12 lg:gap-16 md:items-start'>
         <div>
           {items.map((item) => (
             <CartItem key={item.itemId} item={item} />

@@ -23,13 +23,13 @@ public class AdminStatsController {
 
   @GetMapping
   public ResponseEntity<StatsResponse> getStats() {
-    StatsResponse stats = new StatsResponse(
-        memberRepository.count(),
-        productRepository.count(),
-        orderRepository.count(),
-        orderRepository.countTodayOrders(),
-        orderRepository.sumTotalRevenue()
-    );
+    StatsResponse stats =
+        new StatsResponse(
+            memberRepository.count(),
+            productRepository.count(),
+            orderRepository.count(),
+            orderRepository.countTodayOrders(),
+            orderRepository.sumTotalRevenue());
     return ResponseEntity.ok(stats);
   }
 }

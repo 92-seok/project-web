@@ -5,7 +5,7 @@ export function Footer() {
     <footer className='text-sm'>
       {/* 상단: 3컬럼 링크 */}
       <div className='bg-muted'>
-        <div className='max-w-screen-xl mx-auto px-4 md:px-8 py-10'>
+        <div className='max-w-[1440px] mx-auto px-4 md:px-8 py-10'>
           <div className='grid grid-cols-2 md:grid-cols-3 gap-8 text-xs'>
             <div className='space-y-3'>
               <p className='font-bold tracking-widest uppercase text-foreground'>쇼핑</p>
@@ -91,7 +91,7 @@ export function Footer() {
 
       {/* 중단: 고객센터 */}
       <div className='border-t bg-muted'>
-        <div className='max-w-screen-xl mx-auto px-4 md:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-2'>
+        <div className='max-w-[1440px] mx-auto px-4 md:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-2'>
           <div>
             <p className='text-xs text-muted-foreground mb-1'>고객센터</p>
             <p className='text-2xl font-black tracking-tight'>1588-0000</p>
@@ -105,7 +105,7 @@ export function Footer() {
 
       {/* 하단: 사업자정보 + 저작권 */}
       <div className='bg-muted/50 border-t'>
-        <div className='max-w-screen-xl mx-auto px-4 md:px-8 py-5'>
+        <div className='max-w-[1440px] mx-auto px-4 md:px-8 py-5'>
           <p className='text-[11px] text-muted-foreground leading-relaxed mb-2'>
             상호: 주식회사 Pawmart&nbsp;&nbsp;|&nbsp;&nbsp;대표자: 홍길동&nbsp;&nbsp;|&nbsp;&nbsp;
             사업자등록번호: 000-00-00000&nbsp;&nbsp;|&nbsp;&nbsp;통신판매업신고: 제2026-서울-0000호

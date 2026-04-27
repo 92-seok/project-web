@@ -18,7 +18,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
   boolean existsByEmail(String email);
 
-  @Query("SELECT m FROM Member m WHERE "
-      + "(:keyword IS NULL OR m.name LIKE %:keyword% OR m.email LIKE %:keyword%)")
+  @Query(
+      "SELECT m FROM Member m WHERE "
+          + "(:keyword IS NULL OR m.name LIKE %:keyword% OR m.email LIKE %:keyword%)")
   Page<Member> searchMembers(@Param("keyword") String keyword, Pageable pageable);
 }

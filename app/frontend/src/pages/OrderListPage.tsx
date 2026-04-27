@@ -1,18 +1,23 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Package } from 'lucide-react';
+import { toast } from 'sonner';
 import { MyPageLayout } from '@/components/mypage/MyPageLayout';
 import { OrderCard } from '@/components/mypage/OrderCard';
 import { orderApi, type IOrderSummary } from '@/api/orderApi';
 
-type StatusFilter = 'ALL' | 'PAID' | 'SHIPPING' | 'DELIVERED' | 'CANCELLED';
+type StatusFilter = 'ALL' | 'PAID' | 'PREPARING' | 'SHIPPING' | 'DELIVERED' | 'CANCELLED';
 
 const STATUS_FILTERS: { value: StatusFilter; label: string }[] = [
   { value: 'ALL', label: '전체' },
   { value: 'PAID', label: '결제완료' },
+  { value: 'PREPARING', label: '상품준비중' },
   { value: 'SHIPPING', label: '배송중' },
   { value: 'DELIVERED', label: '배송완료' },
   { value: 'CANCELLED', label: '취소' },
 ];
+
+const VALID_FILTERS: StatusFilter[] = ['ALL', 'PAID', 'PREPARING', 'SHIPPING', 'DELIVERED', 'CANCELLED'];
 
 function OrderCardSkeleton() {
   return (
@@ -42,7 +47,12 @@ function OrderCardSkeleton() {
 }
 
 export function OrderListPage() {
-  const [filter, setFilter] = useState<StatusFilter>('ALL');
+  // URL 쿼리(?status=...)에서 초기 필터 값 읽기 — 마이페이지 안내 카드에서 진입 시 자동 적용
+  const [searchParams] = useSearchParams();
+  const initialFilter = (searchParams.get('status') as StatusFilter) ?? 'ALL';
+  const [filter, setFilter] = useState<StatusFilter>(
+    VALID_FILTERS.includes(initialFilter) ? initialFilter : 'ALL',
+  );
   const [orders, setOrders] = useState<IOrderSummary[]>([]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -68,9 +78,14 @@ export function OrderListPage() {
   const handleCancel = async (id: number) => {
     try {
       await orderApi.cancelOrder(id);
+      toast.success('주문이 취소되었습니다');
       fetchOrders(page);
-    } catch {
-      // 에러 시 무시 (이미 confirm 후 호출됨)
+    } catch (err) {
+      console.error('[OrderList] 주문 취소 실패', err);
+      const apiErr = err as { code?: string; message?: string };
+      toast.error(
+        `주문 취소 실패: ${apiErr?.message ?? apiErr?.code ?? '알 수 없는 오류'}`,
+      );
     }
   };
 

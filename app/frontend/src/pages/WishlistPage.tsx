@@ -43,7 +43,7 @@ export function WishlistPage() {
         </div>
 
         {isLoading && (
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4'>
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className='aspect-square bg-secondary animate-pulse' />
             ))}
@@ -58,7 +58,7 @@ export function WishlistPage() {
         )}
 
         {!isLoading && items.length > 0 && (
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8'>
+          <div className='grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-8'>
             {items.map((item) => (
               <ProductCard key={item.productId} product={toProduct(item)} />
             ))}

@@ -21,5 +21,4 @@ public record OrderDetailResponse(
     String detailAddress,
     String deliveryMemo,
     LocalDateTime paidAt,
-    List<OrderItemResponse> items
-) {}
+    List<OrderItemResponse> items) {}

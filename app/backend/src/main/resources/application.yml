@@ -3,9 +3,20 @@ spring:
   application:
     name: backend
 
+  config:
+    # 프로젝트 루트의 .env 파일을 properties 형식으로 로드 (없어도 OK)
+    # 환경변수처럼 ${KEY} 로 참조 가능
+    import: optional:file:.env[.properties]
+
   profiles:
     # 실행 시 -Dspring.profiles.active=... 지정이 없으면 local로 기동
     default: local
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB # 단일 파일 최대 10MB (스마트폰 원본 이미지 대응)
+      max-request-size: 50MB # 한 요청 총합 (다중 업로드 시)
 
   jpa:
     open-in-view: false # 성능 최적화: 트랜잭션 범위 밖에서의 지연 로딩 방지
@@ -23,9 +34,15 @@ server:
 
 jwt:
   secret: ${JWT_SECRET:dev-secret-key-must-be-at-least-256-bits-long-for-hs256}
-  access-token-expiry: 1800000   # 30분
+  access-token-expiry: 1800000 # 30분
   refresh-token-expiry: 604800000 # 7일
 
 toss:
   secret-key: ${TOSS_SECRET_KEY:test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R}
   client-key: ${TOSS_CLIENT_KEY:test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoh}
+
+# 파일 업로드 — 로컬 디렉토리 저장 (dev/포트폴리오 단계). 운영 시 S3 등으로 교체.
+app:
+  upload:
+    dir: ${UPLOAD_DIR:./uploads} # 백엔드 작업 디렉토리 기준 ./uploads
+    public-prefix: /uploads # 외부 노출 URL prefix

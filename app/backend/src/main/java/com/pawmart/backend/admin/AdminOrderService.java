@@ -40,9 +40,8 @@ public class AdminOrderService {
       orderPage = orderRepository.findAll(pageable);
     }
 
-    List<OrderSummaryResponse> content = orderPage.getContent().stream()
-        .map(this::toSummaryResponse)
-        .toList();
+    List<OrderSummaryResponse> content =
+        orderPage.getContent().stream().map(this::toSummaryResponse).toList();
 
     return new OrderPageResponse(
         content,
@@ -50,20 +49,23 @@ public class AdminOrderService {
         orderPage.getSize(),
         orderPage.getTotalElements(),
         orderPage.getTotalPages(),
-        orderPage.isLast()
-    );
+        orderPage.isLast());
   }
 
   public OrderDetailResponse getOrder(Long id) {
-    Order order = orderRepository.findById(id)
-        .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
+    Order order =
+        orderRepository
+            .findById(id)
+            .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
     return toDetailResponse(order);
   }
 
   @Transactional
   public void updateStatus(Long id, OrderStatus newStatus) {
-    Order order = orderRepository.findById(id)
-        .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
+    Order order =
+        orderRepository
+            .findById(id)
+            .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
     order.updateStatus(newStatus);
   }
 
@@ -93,8 +95,7 @@ public class AdminOrderService {
         items.size(),
         firstItemName,
         firstItemImageUrl,
-        order.getCreatedAt()
-    );
+        order.getCreatedAt());
   }
 
   private OrderDetailResponse toDetailResponse(Order order) {
@@ -102,16 +103,18 @@ public class AdminOrderService {
     String firstItemName = items.isEmpty() ? null : items.get(0).getName();
     String firstItemImageUrl = items.isEmpty() ? null : items.get(0).getImageUrl();
 
-    List<OrderItemResponse> itemResponses = items.stream()
-        .map(item -> new OrderItemResponse(
-            item.getProductId(),
-            item.getName(),
-            item.getPrice(),
-            item.getImageUrl(),
-            item.getQuantity(),
-            item.getSubtotal()
-        ))
-        .toList();
+    List<OrderItemResponse> itemResponses =
+        items.stream()
+            .map(
+                item ->
+                    new OrderItemResponse(
+                        item.getProductId(),
+                        item.getName(),
+                        item.getPrice(),
+                        item.getImageUrl(),
+                        item.getQuantity(),
+                        item.getSubtotal()))
+            .toList();
 
     return new OrderDetailResponse(
         order.getId(),
@@ -130,7 +133,6 @@ public class AdminOrderService {
         order.getDetailAddress(),
         order.getDeliveryMemo(),
         order.getPaidAt(),
-        itemResponses
-    );
+        itemResponses);
   }
 }

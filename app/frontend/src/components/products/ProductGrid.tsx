@@ -21,7 +21,7 @@ function SkeletonCard() {
 export function ProductGrid({ products, isLoading = false, onResetFilter }: IProductGridProps) {
   if (isLoading) {
     return (
-      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10'>
+      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-10'>
         {Array.from({ length: 8 }).map((_, i) => (
           <SkeletonCard key={i} />
         ))}
@@ -46,7 +46,7 @@ export function ProductGrid({ products, isLoading = false, onResetFilter }: IPro
   }
 
   return (
-    <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10'>
+    <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-10'>
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}

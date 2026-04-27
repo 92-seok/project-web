@@ -39,8 +39,7 @@ public class AdminOrderController {
 
   @PatchMapping("/{id}/status")
   public ResponseEntity<Void> updateStatus(
-      @PathVariable Long id,
-      @Valid @RequestBody UpdateOrderStatusRequest request) {
+      @PathVariable Long id, @Valid @RequestBody UpdateOrderStatusRequest request) {
     adminOrderService.updateStatus(id, request.status());
     return ResponseEntity.noContent().build();
   }

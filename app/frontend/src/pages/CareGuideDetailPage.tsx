@@ -60,8 +60,8 @@ function RelatedProductsSection({ productIds }: { productIds: number[] }) {
   if (products.length === 0) return null;
 
   return (
-    <section className='py-12 px-4 md:px-8 bg-secondary'>
-      <div className='max-w-screen-xl mx-auto'>
+    <section className='py-12 px-4 md:px-8 lg:px-12 bg-secondary'>
+      <div className='max-w-[1440px] mx-auto'>
         <h2 className='font-editorial text-2xl font-bold mb-6'>함께 사용하면 좋은 상품</h2>
         <div className='overflow-x-auto'>
           <div className='flex gap-4 pb-2' style={{ minWidth: 'max-content' }}>
@@ -90,8 +90,8 @@ function OtherGuidesSection({
   if (others.length === 0) return null;
 
   return (
-    <section className='py-12 px-4 md:px-8 max-w-screen-xl mx-auto'>
-      <h2 className='font-editorial text-2xl font-bold mb-6'>다른 케어 가이드</h2>
+    <section className='py-12 px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto'>
+      <h2 className='font-editorial text-2xl md:text-3xl font-bold mb-6'>다른 케어 가이드</h2>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
         {others.map((guide) => (
           <Link key={guide.id} to={`/care-guides/${guide.id}`} className='block'>
@@ -155,7 +155,7 @@ export function CareGuideDetailPage() {
         <div className='absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent' />
 
         {/* 히어로 텍스트 */}
-        <div className='absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10 md:pb-14 max-w-screen-xl mx-auto'>
+        <div className='absolute bottom-0 left-0 right-0 px-6 md:px-12 pb-10 md:pb-14 max-w-[1440px] mx-auto'>
           <div className='flex items-center gap-2 mb-3'>
             <span className='text-[10px] tracking-widest font-bold text-accent bg-card/90 px-3 py-1 rounded-full uppercase'>
               {guide.tag}
@@ -179,7 +179,7 @@ export function CareGuideDetailPage() {
       </div>
 
       {/* 브레드크럼 */}
-      <div className='px-4 md:px-8 max-w-screen-xl mx-auto pt-6 pb-2'>
+      <div className='px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto pt-6 pb-2'>
         <nav className='flex items-center gap-2 text-xs text-muted-foreground' aria-label='breadcrumb'>
           <Link to='/' className='hover:text-accent transition-colors'>홈</Link>
           <span>/</span>
@@ -189,8 +189,8 @@ export function CareGuideDetailPage() {
         </nav>
       </div>
 
-      {/* 본문 */}
-      <article className='max-w-2xl mx-auto px-4 py-8 pb-16'>
+      {/* 본문 — 가독성 위해 폭 제한 */}
+      <article className='max-w-3xl mx-auto px-4 md:px-6 py-10 pb-16'>
         {guide.content.map((section, idx) => renderSection(section, idx))}
       </article>
 

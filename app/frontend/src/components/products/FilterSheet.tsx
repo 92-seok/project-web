@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Bone, Cat, Cookie, Dog, Soup } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -17,12 +18,14 @@ interface IFilterSheetProps {
 }
 
 const PET_OPTIONS = [
-  { value: 'dog', label: '강아지', emoji: '🐕' },
-  { value: 'cat', label: '고양이', emoji: '🐈' },
-  { value: 'bird', label: '새', emoji: '🦜' },
-  { value: 'fish', label: '물고기', emoji: '🐠' },
-  { value: 'reptile', label: '파충류', emoji: '🦎' },
-  { value: 'small', label: '소동물', emoji: '🐹' },
+  { value: 'dog', label: '강아지', Icon: Dog },
+  { value: 'cat', label: '고양이', Icon: Cat },
+];
+
+const CATEGORY_OPTIONS = [
+  { value: 'food', label: '사료', Icon: Soup },
+  { value: 'snack', label: '간식', Icon: Cookie },
+  { value: 'supplies', label: '용품', Icon: Bone },
 ];
 
 const BADGE_OPTIONS = ['NEW', 'BEST', 'SALE'];
@@ -56,7 +59,7 @@ export function FilterSheet({ filter, onChange, totalCount, open, onOpenChange }
   };
 
   const handleReset = () => {
-    setDraft({ pet: [], badge: [], priceMax: 0, sort: filter.sort });
+    setDraft({ pet: [], category: [], badge: [], priceMax: 0, sort: filter.sort });
   };
 
   return (
@@ -67,19 +70,20 @@ export function FilterSheet({ filter, onChange, totalCount, open, onOpenChange }
         </SheetHeader>
 
         <div className='px-5 py-5 space-y-5 pb-32'>
-          {/* 반려동물 타입 */}
+          {/* 반려동물 종류 */}
           <section>
-            <p className={SECTION_TITLE_CLASS}>반려동물</p>
-            {PET_OPTIONS.map((opt) => (
-              <label key={opt.value} className={CHECKBOX_ROW_CLASS}>
+            <p className={SECTION_TITLE_CLASS}>반려동물 종류</p>
+            {PET_OPTIONS.map(({ value, label, Icon }) => (
+              <label key={value} className={CHECKBOX_ROW_CLASS}>
                 <input
                   type='checkbox'
-                  checked={draft.pet.includes(opt.value)}
-                  onChange={() => setDraft((prev) => ({ ...prev, pet: toggleArray(prev.pet, opt.value) }))}
+                  checked={draft.pet.includes(value)}
+                  onChange={() => setDraft((prev) => ({ ...prev, pet: toggleArray(prev.pet, value) }))}
                   className='w-3.5 h-3.5 accent-foreground cursor-pointer'
                 />
-                <span className='text-sm'>
-                  {opt.emoji} {opt.label}
+                <span className='text-sm flex items-center gap-2'>
+                  <Icon className='w-4 h-4 text-muted-foreground' strokeWidth={1.6} />
+                  {label}
                 </span>
               </label>
             ))}
@@ -87,9 +91,32 @@ export function FilterSheet({ filter, onChange, totalCount, open, onOpenChange }
 
           <Separator />
 
-          {/* 상태 */}
+          {/* 카테고리 */}
           <section>
-            <p className={SECTION_TITLE_CLASS}>상태</p>
+            <p className={SECTION_TITLE_CLASS}>카테고리</p>
+            {CATEGORY_OPTIONS.map(({ value, label, Icon }) => (
+              <label key={value} className={CHECKBOX_ROW_CLASS}>
+                <input
+                  type='checkbox'
+                  checked={draft.category.includes(value)}
+                  onChange={() =>
+                    setDraft((prev) => ({ ...prev, category: toggleArray(prev.category, value) }))
+                  }
+                  className='w-3.5 h-3.5 accent-foreground cursor-pointer'
+                />
+                <span className='text-sm flex items-center gap-2'>
+                  <Icon className='w-4 h-4 text-muted-foreground' strokeWidth={1.6} />
+                  {label}
+                </span>
+              </label>
+            ))}
+          </section>
+
+          <Separator />
+
+          {/* 상품 라벨 */}
+          <section>
+            <p className={SECTION_TITLE_CLASS}>상품 라벨</p>
             {BADGE_OPTIONS.map((badge) => (
               <label key={badge} className={CHECKBOX_ROW_CLASS}>
                 <input
@@ -105,9 +132,9 @@ export function FilterSheet({ filter, onChange, totalCount, open, onOpenChange }
 
           <Separator />
 
-          {/* 최대 가격 */}
+          {/* 가격대 */}
           <section>
-            <p className={SECTION_TITLE_CLASS}>최대 가격</p>
+            <p className={SECTION_TITLE_CLASS}>가격대</p>
             <div className='flex flex-wrap gap-1.5'>
               {PRICE_OPTIONS.map((opt) => {
                 const isActive = draft.priceMax === opt.value;

@@ -11,5 +11,4 @@ public record OrderSummaryResponse(
     int itemCount,
     String firstItemName,
     String firstItemImageUrl,
-    LocalDateTime createdAt
-) {}
+    LocalDateTime createdAt) {}

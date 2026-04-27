@@ -27,12 +27,13 @@ public class WishlistService {
     List<Wishlist> wishlists = wishlistRepository.findByMemberId(memberId);
     List<Long> productIds = wishlists.stream().map(Wishlist::getProductId).toList();
     List<Product> products = productRepository.findAllById(productIds);
-    Map<Long, Product> productMap = products.stream()
-        .collect(Collectors.toMap(Product::getId, p -> p));
-    List<WishlistItemResponse> items = wishlists.stream()
-        .filter(w -> productMap.containsKey(w.getProductId()))
-        .map(w -> WishlistItemResponse.from(productMap.get(w.getProductId())))
-        .toList();
+    Map<Long, Product> productMap =
+        products.stream().collect(Collectors.toMap(Product::getId, p -> p));
+    List<WishlistItemResponse> items =
+        wishlists.stream()
+            .filter(w -> productMap.containsKey(w.getProductId()))
+            .map(w -> WishlistItemResponse.from(productMap.get(w.getProductId())))
+            .toList();
     return new WishlistResponse(items, items.size());
   }
 
@@ -41,7 +42,8 @@ public class WishlistService {
     if (!productRepository.existsById(productId)) {
       throw new BusinessException(ErrorCode.NOT_FOUND);
     }
-    Optional<Wishlist> existing = wishlistRepository.findByMemberIdAndProductId(memberId, productId);
+    Optional<Wishlist> existing =
+        wishlistRepository.findByMemberIdAndProductId(memberId, productId);
     if (existing.isPresent()) {
       wishlistRepository.deleteByMemberIdAndProductId(memberId, productId);
       return new WishlistToggleResponse(false);

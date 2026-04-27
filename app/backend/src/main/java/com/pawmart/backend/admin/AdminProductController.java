@@ -28,23 +28,20 @@ public class AdminProductController {
 
   @GetMapping
   public ResponseEntity<ProductPageResponse> getProducts(
-      @RequestParam(defaultValue = "0") int page,
-      @RequestParam(defaultValue = "20") int size) {
+      @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
     return ResponseEntity.ok(adminProductService.getProducts(page, size));
   }
 
   @PostMapping
   public ResponseEntity<Void> createProduct(@Valid @RequestBody CreateProductRequest request) {
     Product created = adminProductService.createProduct(request);
-    return ResponseEntity.created(
-        java.net.URI.create("/api/admin/products/" + created.getId())
-    ).build();
+    return ResponseEntity.created(java.net.URI.create("/api/admin/products/" + created.getId()))
+        .build();
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<Void> updateProduct(
-      @PathVariable Long id,
-      @Valid @RequestBody CreateProductRequest request) {
+      @PathVariable Long id, @Valid @RequestBody CreateProductRequest request) {
     adminProductService.updateProduct(id, request);
     return ResponseEntity.noContent().build();
   }

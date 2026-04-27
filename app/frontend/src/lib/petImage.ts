@@ -1,17 +1,28 @@
 /**
  * petImage — 펫 이미지 URL 헬퍼
  *
- * Royal Canin CDN 무단 사용을 제거하고, 무료 placeholder 서비스로 통일.
- * - 강아지: placedog.net (id 1~99 안정 작동)
- * - 고양이: placekitten.com (size 변경으로 다양화)
- * - 키워드: loremflickr.com (사료/장난감 등)
- *
- * 백엔드에서 실제 imageUrl을 내려주면 그대로 사용되고,
- * 비어 있을 때만 이 헬퍼로 fallback.
+ * 외부 placeholder(placedog.net / placekitten.com)는 Cloudflare 521 등으로 자주 다운되어
+ * 안정적인 Unsplash 큐레이션 풀로 교체. 백엔드 imageUrl 이 비어 있을 때만 폴백으로 사용.
  */
 
-const DOG_IDS = [12, 18, 23, 31, 42, 56, 67, 75, 88, 91];
-const CAT_VARIANTS = [800, 801, 802, 803, 804, 805, 806, 807, 808, 809];
+// Unsplash 검증된 photo ID 풀 (전수 검증 완료, w/q/auto 옵션 공통)
+const DOG_PHOTOS = [
+  '1450778869180-41d0601e046e', // dogWithBowl
+  '1543466835-00a7907e9de1', // goldenRetriever
+  '1601758228041-f3b2795255f1', // dogPuppyField
+  '1612637968894-660373e23b03', // vetCare
+];
+
+const CAT_PHOTOS = [
+  '1583337130417-3346a1be7dee', // catCloseup
+  '1518791841217-8f162f1e1131', // catBlackWhite
+  '1574158622682-e40e69881006', // catSeasonal
+];
+
+const GENERIC_PETS = [
+  '1535930891776-0c2dfb7fda1a', // dailyRoutine
+  '1568640347023-a616a30bc3bd', // petFood
+];
 
 interface IPetImageOptions {
   productId: number;
@@ -20,19 +31,26 @@ interface IPetImageOptions {
   height?: number;
 }
 
+function unsplashUrl(photoId: string, width: number): string {
+  return `https://images.unsplash.com/photo-${photoId}?w=${width}&q=80&auto=format&fit=crop`;
+}
+
 export function getPetImageUrl({
   productId,
   category = 'dog',
   width = 800,
-  height = 800,
 }: IPetImageOptions): string {
   if (category === 'cat') {
-    const v = CAT_VARIANTS[productId % CAT_VARIANTS.length];
-    return `https://placekitten.com/${width}/${v}`;
+    const id = CAT_PHOTOS[productId % CAT_PHOTOS.length];
+    return unsplashUrl(id, width);
   }
-  // dog (default)
-  const id = DOG_IDS[productId % DOG_IDS.length];
-  return `https://placedog.net/${width}/${height}?id=${id}`;
+  if (category === 'dog') {
+    const id = DOG_PHOTOS[productId % DOG_PHOTOS.length];
+    return unsplashUrl(id, width);
+  }
+  // 그 외(all/bird/fish 등) → 일반 펫 풀
+  const id = GENERIC_PETS[productId % GENERIC_PETS.length];
+  return unsplashUrl(id, width);
 }
 
 /**

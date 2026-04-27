@@ -44,3 +44,7 @@ src/main/resources/application-*-local.yml
 src/main/resources/application-secret.yml
 .env
 .env.local
+
+### Uploads ###
+# 사용자 업로드 이미지 — 로컬 디렉토리, 커밋 금지
+uploads/

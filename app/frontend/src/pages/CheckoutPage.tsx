@@ -8,7 +8,7 @@ import { OrderSummary } from '@/components/cart/OrderSummary';
 import { orderApi } from '@/api/orderApi';
 import { AddressSearch } from '@/components/address/AddressSearch';
 
-const TOSS_CLIENT_KEY = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoh';
+const TOSS_CLIENT_KEY = import.meta.env.VITE_TOSS_CLIENT_KEY as string | undefined;
 
 type Step = 1 | 2 | 3;
 
@@ -37,6 +37,16 @@ const PAYMENT_METHODS: IPaymentMethod[] = [
 ];
 
 const STEP_LABELS = ['배송정보', '결제수단', '최종확인'] as const;
+
+// 배송 정보 클라이언트 검증 — 빈 값이면 토스트로 안내
+function validateShipping(form: IShippingForm): string | null {
+  if (!form.name.trim()) return '수령인을 입력해주세요';
+  if (!form.phone.trim()) return '연락처를 입력해주세요';
+  if (!form.postalCode.trim() || !form.address.trim()) {
+    return '주소를 검색해서 선택해주세요';
+  }
+  return null;
+}
 
 interface IFieldProps {
   label: string;
@@ -222,11 +232,32 @@ export function CheckoutPage() {
     return null;
   }
 
+  const handleNextStep = () => {
+    if (step === 1) {
+      const err = validateShipping(shippingForm);
+      if (err) {
+        toast.error(err);
+        return;
+      }
+    }
+    setStep((s) => (s + 1) as Step);
+  };
+
   const handlePayment = async () => {
+    // 결제 직전 안전망 — 검증 한 번 더
+    const err = validateShipping(shippingForm);
+    if (err) {
+      toast.error(err);
+      setStep(1);
+      return;
+    }
+
     setIsSubmitting(true);
+
+    // 1. 백엔드에 주문 생성
+    let order: Awaited<ReturnType<typeof orderApi.createOrder>>;
     try {
-      // 1. 백엔드에 주문 생성
-      const order = await orderApi.createOrder({
+      order = await orderApi.createOrder({
         items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
         receiverName: shippingForm.name,
         receiverPhone: shippingForm.phone,
@@ -235,8 +266,25 @@ export function CheckoutPage() {
         detailAddress: shippingForm.detailAddress || undefined,
         deliveryMemo: shippingForm.memo || undefined,
       });
+    } catch (err) {
+      console.error('[Checkout] 주문 생성 실패', err);
+      const apiErr = err as { code?: string; message?: string };
+      toast.error(
+        `주문 생성 실패: ${apiErr?.message ?? apiErr?.code ?? '알 수 없는 오류'}`,
+      );
+      setIsSubmitting(false);
+      return;
+    }
 
-      // 2. 토스페이먼츠 결제창 호출 (성공 시 리다이렉트되므로 이후 코드 실행 안 됨)
+    // 2. 토스페이먼츠 결제창 호출 (성공 시 리다이렉트되므로 이후 코드 실행 안 됨)
+    if (!TOSS_CLIENT_KEY) {
+      console.error('[Checkout] VITE_TOSS_CLIENT_KEY 가 설정되지 않았습니다');
+      toast.error('결제 키가 설정되어 있지 않습니다. 관리자에게 문의해주세요.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
       const tossPayments = await loadTossPayments(TOSS_CLIENT_KEY);
       const tossPayment = tossPayments.payment({
         customerKey: `customer-${user?.memberId ?? 'guest'}`,
@@ -255,8 +303,12 @@ export function CheckoutPage() {
         successUrl: `${window.location.origin}/payment/success`,
         failUrl: `${window.location.origin}/payment/fail`,
       });
-    } catch {
-      toast.error('결제를 시작할 수 없습니다. 다시 시도해주세요.');
+    } catch (err) {
+      console.error('[Checkout] 토스 결제창 호출 실패', err);
+      const tossErr = err as { code?: string; message?: string };
+      toast.error(
+        `결제창을 띄울 수 없습니다: ${tossErr?.message ?? tossErr?.code ?? '알 수 없는 오류'}`,
+      );
       setIsSubmitting(false);
     }
   };
@@ -264,7 +316,8 @@ export function CheckoutPage() {
   return (
     <div className='min-h-screen'>
       {/* 스텝 인디케이터 */}
-      <div className='flex items-center px-4 md:px-8 py-6 border-b border-border bg-secondary/30 gap-0'>
+      <div className='border-b border-border bg-secondary/30'>
+        <div className='max-w-[1440px] mx-auto flex items-center px-4 md:px-8 lg:px-12 py-6 gap-0'>
         {STEP_LABELS.map((label, i) => {
           const stepNum = (i + 1) as Step;
           const isActive = step === stepNum;
@@ -301,9 +354,10 @@ export function CheckoutPage() {
             </React.Fragment>
           );
         })}
+        </div>
       </div>
 
-      <div className='px-4 md:px-8 py-8 md:grid md:grid-cols-[1fr_320px] md:gap-12 md:items-start'>
+      <div className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-10 md:grid md:grid-cols-[minmax(0,1fr)_360px] lg:grid-cols-[minmax(0,1fr)_400px] md:gap-12 lg:gap-16 md:items-start'>
         <div>
           {step === 1 && <Step1 form={shippingForm} onChange={setShippingForm} />}
           {step === 2 && <Step2 payment={payment} onChange={setPayment} />}
@@ -321,7 +375,7 @@ export function CheckoutPage() {
             )}
             {step < 3 ? (
               <button
-                onClick={() => setStep((s) => (s + 1) as Step)}
+                onClick={handleNextStep}
                 className='flex-[1.4] py-3.5 rounded-full bg-accent text-accent-foreground text-sm font-semibold hover:opacity-95 transition-opacity'
               >
                 다음 단계로 →

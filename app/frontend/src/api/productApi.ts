@@ -32,6 +32,7 @@ export interface IProductPage {
 export interface IGetProductsParams {
   petType?: string;
   category?: string;
+  badge?: string;
   keyword?: string;
   sort?: string;
   page?: number;

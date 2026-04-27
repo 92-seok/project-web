@@ -9,5 +9,4 @@ public record ReviewPageResponse(
     int page,
     int size,
     int totalPages,
-    boolean last
-) {}
+    boolean last) {}

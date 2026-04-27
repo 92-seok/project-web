@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Package, Heart, Settings, LogOut } from 'lucide-react';
+import { User, Package, Heart, Settings, LogOut, PawPrint } from 'lucide-react';
 import { authApi } from '@/api/authApi';
 import { useAuthStore } from '@/store/authStore';
 
@@ -13,6 +13,7 @@ const MENU_ITEMS = [
   { href: '/mypage', label: '마이페이지', icon: User },
   { href: '/mypage/orders', label: '주문 내역', icon: Package },
   { href: '/mypage/wishlist', label: '찜 목록', icon: Heart },
+  { href: '/mypage/pets', label: '내 반려동물', icon: PawPrint },
   { href: '/mypage/profile', label: '프로필 수정', icon: Settings },
 ];
 
@@ -43,18 +44,20 @@ function LogoutButton() {
 export function MyPageLayout({ children, activeMenu }: IMyPageLayoutProps) {
   return (
     <div className='min-h-screen'>
-      <div className='border-b border-border px-4 md:px-8 py-8 bg-secondary/30'>
-        <p className='text-[10px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
-          MY ACCOUNT
-        </p>
-        <h1 className='font-editorial text-3xl md:text-[2.25rem] font-bold tracking-tight'>
-          마이페이지
-        </h1>
+      <div className='border-b border-border bg-secondary/30'>
+        <div className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-8'>
+          <p className='text-[10px] tracking-[0.3em] text-accent uppercase font-semibold mb-2'>
+            MY ACCOUNT
+          </p>
+          <h1 className='font-editorial text-3xl md:text-[2.25rem] lg:text-[2.5rem] font-bold tracking-tight'>
+            마이페이지
+          </h1>
+        </div>
       </div>
 
-      <div className='flex max-w-screen-xl mx-auto'>
+      <div className='flex max-w-[1440px] mx-auto'>
         {/* 사이드 메뉴 (데스크톱) */}
-        <aside className='hidden md:block w-56 shrink-0 py-8 px-4 border-r border-border'>
+        <aside className='hidden md:block w-56 lg:w-64 shrink-0 py-10 px-4 lg:px-6 border-r border-border'>
           <nav className='space-y-1'>
             {MENU_ITEMS.map((item) => {
               const isActive = activeMenu === item.href;
@@ -105,7 +108,7 @@ export function MyPageLayout({ children, activeMenu }: IMyPageLayoutProps) {
         </div>
 
         {/* 데스크톱 콘텐츠 */}
-        <main className='hidden md:block flex-1 min-w-0 px-8 py-10'>{children}</main>
+        <main className='hidden md:block flex-1 min-w-0 px-8 lg:px-12 py-10'>{children}</main>
       </div>
     </div>
   );

@@ -12,8 +12,7 @@ public record WishlistItemResponse(
     String imageUrl,
     String badge,
     BigDecimal rating,
-    int reviewCount
-) {
+    int reviewCount) {
 
   public static WishlistItemResponse from(Product p) {
     return new WishlistItemResponse(
@@ -24,7 +23,6 @@ public record WishlistItemResponse(
         p.getImageUrl(),
         p.getBadge(),
         p.getRating(),
-        p.getReviewCount()
-    );
+        p.getReviewCount());
   }
 }

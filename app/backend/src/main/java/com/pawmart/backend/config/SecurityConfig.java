@@ -42,8 +42,12 @@ public class SecurityConfig {
                         "/api/public/**",
                         "/actuator/health")
                     .permitAll()
-                    .requestMatchers("/api/products/**").permitAll()
-                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/api/products/**")
+                    .permitAll()
+                    .requestMatchers("/uploads/**")
+                    .permitAll()
+                    .requestMatchers("/api/admin/**")
+                    .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated())
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

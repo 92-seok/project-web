@@ -8,7 +8,7 @@ interface IOrderCardProps {
 
 const STATUS_STYLE: Record<string, string> = {
   PAID: 'bg-amber-100 text-amber-800',
-  CONFIRMED: 'bg-sky-100 text-sky-800',
+  PREPARING: 'bg-sky-100 text-sky-800',
   SHIPPING: 'bg-accent text-accent-foreground',
   DELIVERED: 'bg-[var(--badge-care)]/20 text-[var(--badge-care)]',
   CANCELLED: 'bg-secondary text-muted-foreground',
@@ -78,7 +78,7 @@ export function OrderCard({ order, onCancel }: IOrderCardProps) {
               리뷰 작성
             </button>
           )}
-          {order.status === 'PAID' && (
+          {(order.status === 'PAID' || order.status === 'PREPARING') && onCancel && (
             <button
               onClick={handleCancel}
               className='px-3 py-1.5 rounded-full text-xs font-semibold border border-border hover:border-destructive hover:text-destructive transition-colors'

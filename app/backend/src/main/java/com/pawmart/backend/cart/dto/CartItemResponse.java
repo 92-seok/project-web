@@ -8,5 +8,4 @@ public record CartItemResponse(
     Integer originalPrice,
     String imageUrl,
     int quantity,
-    int subtotal
-) {}
+    int subtotal) {}

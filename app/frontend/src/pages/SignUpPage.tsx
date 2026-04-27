@@ -63,7 +63,7 @@ export function SignUpPage() {
 
   return (
     <main className='min-h-screen bg-background px-4 py-8 md:flex md:items-center md:justify-center md:py-12'>
-      <div className='w-full max-w-lg'>
+      <div className='w-full max-w-lg lg:max-w-xl'>
         {/* 헤더 */}
         <div className='mb-8 flex items-center gap-3'>
           <Button

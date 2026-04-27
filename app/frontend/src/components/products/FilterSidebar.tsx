@@ -1,3 +1,4 @@
+import { Bone, Cat, Cookie, Dog, Soup } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import type { IFilterState } from '@/types/product';
 
@@ -7,13 +8,17 @@ interface IFilterSidebarProps {
   totalCount: number;
 }
 
+// 헤더 GNB 카테고리와 일관 — 강아지/고양이만 (그 외 펫타입은 시드/검색에는 존재하나 필터에서 제외)
 const PET_OPTIONS = [
-  { value: 'dog', label: '강아지', emoji: '🐕' },
-  { value: 'cat', label: '고양이', emoji: '🐈' },
-  { value: 'bird', label: '새', emoji: '🦜' },
-  { value: 'fish', label: '물고기', emoji: '🐠' },
-  { value: 'reptile', label: '파충류', emoji: '🦎' },
-  { value: 'small', label: '소동물', emoji: '🐹' },
+  { value: 'dog', label: '강아지', Icon: Dog },
+  { value: 'cat', label: '고양이', Icon: Cat },
+];
+
+// 헤더 GNB 카테고리와 일관 — 사료/간식/용품 (toy/beauty/health 는 검색으로만 접근)
+const CATEGORY_OPTIONS = [
+  { value: 'food', label: '사료', Icon: Soup },
+  { value: 'snack', label: '간식', Icon: Cookie },
+  { value: 'supplies', label: '용품', Icon: Bone },
 ];
 
 const BADGE_OPTIONS = ['NEW', 'BEST', 'SALE'];
@@ -35,6 +40,7 @@ function toggleArray(arr: string[], value: string): string[] {
 
 const DEFAULT_FILTER: IFilterState = {
   pet: [],
+  category: [],
   badge: [],
   priceMax: 0,
   sort: 'popular',
@@ -43,6 +49,10 @@ const DEFAULT_FILTER: IFilterState = {
 export function FilterSidebar({ filter, onChange, totalCount: _totalCount }: IFilterSidebarProps) {
   const handlePetToggle = (value: string) => {
     onChange({ ...filter, pet: toggleArray(filter.pet, value) });
+  };
+
+  const handleCategoryToggle = (value: string) => {
+    onChange({ ...filter, category: toggleArray(filter.category, value) });
   };
 
   const handleBadgeToggle = (value: string) => {
@@ -58,7 +68,7 @@ export function FilterSidebar({ filter, onChange, totalCount: _totalCount }: IFi
   };
 
   return (
-    <aside className='hidden md:block w-56 shrink-0'>
+    <aside className='hidden md:block w-56 lg:w-60 shrink-0'>
       <div className='flex items-center justify-between mb-6'>
         <p className={SECTION_TITLE_CLASS + ' mb-0'}>FILTER</p>
         <button
@@ -69,19 +79,20 @@ export function FilterSidebar({ filter, onChange, totalCount: _totalCount }: IFi
         </button>
       </div>
 
-      {/* 반려동물 타입 */}
+      {/* 반려동물 종류 */}
       <section className='mb-5'>
-        <p className={SECTION_TITLE_CLASS}>반려동물</p>
-        {PET_OPTIONS.map((opt) => (
-          <label key={opt.value} className={CHECKBOX_ROW_CLASS}>
+        <p className={SECTION_TITLE_CLASS}>반려동물 종류</p>
+        {PET_OPTIONS.map(({ value, label, Icon }) => (
+          <label key={value} className={CHECKBOX_ROW_CLASS}>
             <input
               type='checkbox'
-              checked={filter.pet.includes(opt.value)}
-              onChange={() => handlePetToggle(opt.value)}
+              checked={filter.pet.includes(value)}
+              onChange={() => handlePetToggle(value)}
               className='w-3.5 h-3.5 accent-foreground cursor-pointer'
             />
-            <span className='text-sm'>
-              {opt.emoji} {opt.label}
+            <span className='text-sm flex items-center gap-2'>
+              <Icon className='w-4 h-4 text-muted-foreground' strokeWidth={1.6} />
+              {label}
             </span>
           </label>
         ))}
@@ -89,9 +100,30 @@ export function FilterSidebar({ filter, onChange, totalCount: _totalCount }: IFi
 
       <Separator className='mb-5' />
 
-      {/* 상태 */}
+      {/* 상품 카테고리 */}
       <section className='mb-5'>
-        <p className={SECTION_TITLE_CLASS}>상태</p>
+        <p className={SECTION_TITLE_CLASS}>카테고리</p>
+        {CATEGORY_OPTIONS.map(({ value, label, Icon }) => (
+          <label key={value} className={CHECKBOX_ROW_CLASS}>
+            <input
+              type='checkbox'
+              checked={filter.category.includes(value)}
+              onChange={() => handleCategoryToggle(value)}
+              className='w-3.5 h-3.5 accent-foreground cursor-pointer'
+            />
+            <span className='text-sm flex items-center gap-2'>
+              <Icon className='w-4 h-4 text-muted-foreground' strokeWidth={1.6} />
+              {label}
+            </span>
+          </label>
+        ))}
+      </section>
+
+      <Separator className='mb-5' />
+
+      {/* 상품 라벨 */}
+      <section className='mb-5'>
+        <p className={SECTION_TITLE_CLASS}>상품 라벨</p>
         {BADGE_OPTIONS.map((badge) => (
           <label key={badge} className={CHECKBOX_ROW_CLASS}>
             <input
@@ -107,9 +139,9 @@ export function FilterSidebar({ filter, onChange, totalCount: _totalCount }: IFi
 
       <Separator className='mb-5' />
 
-      {/* 최대 가격 */}
+      {/* 가격대 */}
       <section className='mb-5'>
-        <p className={SECTION_TITLE_CLASS}>최대 가격</p>
+        <p className={SECTION_TITLE_CLASS}>가격대</p>
         <div className='flex flex-wrap gap-1.5'>
           {PRICE_OPTIONS.map((opt) => {
             const isActive = filter.priceMax === opt.value;
