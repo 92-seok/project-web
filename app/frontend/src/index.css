@@ -61,111 +61,113 @@
 }
 
 :root {
-    /* Editorial Wellness 2026
-       Primary  : #6B8E7F  Muted Sage   → oklch(0.59 0.04 155)
-       Deep     : #2D4A3E  Deep Forest  → oklch(0.34 0.04 160)
-       Accent   : #C8553D  Terracotta   → oklch(0.55 0.16 35)   — WCAG AA 통과 (4.0:1+)
-       Surface  : #FAF7F2  Warm Cream   → oklch(0.97 0.008 80)
-       Surface2 : #EFE9DD  Soft Sand    → oklch(0.92 0.015 80)
-       Text     : #1F2A26  Forest Black → oklch(0.21 0.012 165)
+    /* Pawmart 2026 — Pet Friendly Soft
+       Background : #FBF7F1  Peach Cream   → oklch(0.972 0.008 80)
+       Card       : #FFFFFF  White         → oklch(1.000 0 0)
+       Foreground : #1F1916  Warm Black    → oklch(0.197 0.008 35)
+       Muted FG   : #6B5757  Warm Gray     → oklch(0.485 0.020 25)
+       Border     : #EDE4D6  Soft Sand     → oklch(0.913 0.020 80)
+       Primary    : #2A1F1F  Deep Warm     → oklch(0.245 0.012 30)
+       Accent     : #E07856  Soft Coral    → oklch(0.660 0.140 38)   — WCAG AA 통과
+       Sage       : #88A876  Sage Green    → oklch(0.665 0.060 130)  — secondary brand
     */
 
-    --background: oklch(0.97 0.008 80);
-    --foreground: oklch(0.21 0.012 165);
-    --card: oklch(0.99 0.004 80);
-    --card-foreground: oklch(0.21 0.012 165);
-    --popover: oklch(0.99 0.004 80);
-    --popover-foreground: oklch(0.21 0.012 165);
+    --background: oklch(0.972 0.008 80);
+    --foreground: oklch(0.197 0.008 35);
+    --card: oklch(1.000 0 0);
+    --card-foreground: oklch(0.197 0.008 35);
+    --popover: oklch(1.000 0 0);
+    --popover-foreground: oklch(0.197 0.008 35);
 
-    --primary: oklch(0.34 0.04 160);          /* Deep Forest — 헤더/타이틀 */
-    --primary-foreground: oklch(0.98 0.005 80);
+    --primary: oklch(0.245 0.012 30);         /* Deep Warm — 헤더/타이틀 */
+    --primary-foreground: oklch(0.99 0.005 80);
 
-    --secondary: oklch(0.92 0.015 80);        /* Soft Sand */
-    --secondary-foreground: oklch(0.34 0.04 160);
+    --secondary: oklch(0.929 0.030 110);      /* Sage Soft — 서브 배경 */
+    --secondary-foreground: oklch(0.245 0.012 30);
 
-    --muted: oklch(0.94 0.012 80);
-    --muted-foreground: oklch(0.50 0.015 165);
+    --muted: oklch(0.95 0.012 80);
+    --muted-foreground: oklch(0.485 0.020 25);
 
-    --accent: oklch(0.55 0.16 35);            /* Terracotta — CTA/강조 */
+    --accent: oklch(0.660 0.140 38);          /* Soft Coral — CTA/강조 */
     --accent-foreground: oklch(0.99 0.005 80);
 
-    --destructive: oklch(0.55 0.20 27);
-    --border: oklch(0.88 0.015 80);
-    --input: oklch(0.88 0.015 80);
-    --ring: oklch(0.59 0.04 155);
+    --destructive: oklch(0.58 0.20 28);       /* Sale red #D63B3B */
+    --border: oklch(0.913 0.020 80);
+    --input: oklch(0.913 0.020 80);
+    --ring: oklch(0.660 0.140 38);
 
-    --chart-1: oklch(0.59 0.04 155);          /* Sage */
-    --chart-2: oklch(0.55 0.16 35);           /* Terracotta */
-    --chart-3: oklch(0.70 0.06 80);           /* Honey */
-    --chart-4: oklch(0.65 0.07 165);          /* Mint */
-    --chart-5: oklch(0.34 0.04 160);          /* Deep Forest */
+    --chart-1: oklch(0.660 0.140 38);         /* Coral */
+    --chart-2: oklch(0.665 0.060 130);        /* Sage */
+    --chart-3: oklch(0.730 0.090 75);         /* Honey */
+    --chart-4: oklch(0.917 0.038 48);         /* Peach */
+    --chart-5: oklch(0.245 0.012 30);         /* Deep Warm */
 
     --radius: 0.75rem;                         /* 12px — 라운디드 */
 
-    /* 효능 배지 (의약 표현 회피: "강화/예방/치료" 사용 X) */
-    --badge-care: oklch(0.59 0.04 155);       /* Sage — 민감 케어 */
-    --badge-dental: oklch(0.65 0.07 165);     /* Mint — 덴탈 케어 */
-    --badge-organic: oklch(0.70 0.10 130);    /* Olive — 유기농 인증 */
-    --badge-joint: oklch(0.70 0.06 80);       /* Honey — 관절 케어 */
-    --badge-vet: oklch(0.55 0.16 35);         /* Terracotta — 수의사 검증 */
+    /* 효능 배지 — Pet Friendly 톤에 맞춰 재조정 */
+    --badge-care: oklch(0.665 0.060 130);     /* Sage — 민감 케어 */
+    --badge-dental: oklch(0.690 0.070 165);   /* Mint — 덴탈 케어 */
+    --badge-organic: oklch(0.700 0.090 125);  /* Olive — 유기농 인증 */
+    --badge-joint: oklch(0.730 0.090 75);     /* Honey — 관절 케어 */
+    --badge-vet: oklch(0.660 0.140 38);       /* Coral — 수의사 검증 */
 
     /* 사이드바 (어드민용) */
-    --sidebar: oklch(0.34 0.04 160);
-    --sidebar-foreground: oklch(0.92 0.015 80);
-    --sidebar-primary: oklch(0.55 0.16 35);
+    --sidebar: oklch(0.245 0.012 30);
+    --sidebar-foreground: oklch(0.929 0.030 110);
+    --sidebar-primary: oklch(0.660 0.140 38);
     --sidebar-primary-foreground: oklch(0.99 0.005 80);
-    --sidebar-accent: oklch(0.40 0.04 160);
-    --sidebar-accent-foreground: oklch(0.92 0.015 80);
-    --sidebar-border: oklch(0.42 0.04 160);
-    --sidebar-ring: oklch(0.59 0.04 155);
+    --sidebar-accent: oklch(0.30 0.014 30);
+    --sidebar-accent-foreground: oklch(0.929 0.030 110);
+    --sidebar-border: oklch(0.32 0.014 30);
+    --sidebar-ring: oklch(0.660 0.140 38);
 }
 
 .dark {
-    /* 따뜻한 차콜 베이스 (순흑 X) */
-    --background: oklch(0.18 0.008 165);
-    --foreground: oklch(0.95 0.008 80);
-    --card: oklch(0.22 0.010 165);
-    --card-foreground: oklch(0.95 0.008 80);
-    --popover: oklch(0.22 0.010 165);
-    --popover-foreground: oklch(0.95 0.008 80);
+    /* 따뜻한 차콜 베이스 (Pet Friendly Dark) */
+    --background: oklch(0.18 0.010 30);       /* Warm charcoal */
+    --foreground: oklch(0.95 0.012 80);
+    --card: oklch(0.22 0.012 30);
+    --card-foreground: oklch(0.95 0.012 80);
+    --popover: oklch(0.22 0.012 30);
+    --popover-foreground: oklch(0.95 0.012 80);
 
-    --primary: oklch(0.92 0.015 80);
-    --primary-foreground: oklch(0.18 0.008 165);
+    --primary: oklch(0.95 0.012 80);
+    --primary-foreground: oklch(0.18 0.010 30);
 
-    --secondary: oklch(0.27 0.012 165);
-    --secondary-foreground: oklch(0.95 0.008 80);
+    --secondary: oklch(0.27 0.014 30);
+    --secondary-foreground: oklch(0.95 0.012 80);
 
-    --muted: oklch(0.27 0.012 165);
-    --muted-foreground: oklch(0.70 0.015 165);
+    --muted: oklch(0.27 0.014 30);
+    --muted-foreground: oklch(0.72 0.020 25);
 
-    --accent: oklch(0.65 0.14 35);            /* Coral 다크 보정 */
-    --accent-foreground: oklch(0.18 0.008 165);
+    --accent: oklch(0.720 0.130 38);          /* Soft Coral 다크 보정 */
+    --accent-foreground: oklch(0.18 0.010 30);
 
     --destructive: oklch(0.65 0.18 25);
     --border: oklch(1 0 0 / 8%);
     --input: oklch(1 0 0 / 12%);
-    --ring: oklch(0.59 0.04 155);
+    --ring: oklch(0.720 0.130 38);
 
-    --chart-1: oklch(0.59 0.04 155);
-    --chart-2: oklch(0.65 0.14 35);
-    --chart-3: oklch(0.75 0.06 80);
-    --chart-4: oklch(0.70 0.07 165);
-    --chart-5: oklch(0.55 0.04 160);
+    --chart-1: oklch(0.720 0.130 38);
+    --chart-2: oklch(0.700 0.060 130);
+    --chart-3: oklch(0.770 0.090 75);
+    --chart-4: oklch(0.917 0.038 48);
+    --chart-5: oklch(0.450 0.014 30);
 
-    --badge-care: oklch(0.65 0.05 155);
-    --badge-dental: oklch(0.72 0.07 165);
-    --badge-organic: oklch(0.75 0.10 130);
-    --badge-joint: oklch(0.75 0.06 80);
-    --badge-vet: oklch(0.65 0.14 35);
+    --badge-care: oklch(0.700 0.060 130);
+    --badge-dental: oklch(0.730 0.070 165);
+    --badge-organic: oklch(0.750 0.090 125);
+    --badge-joint: oklch(0.770 0.090 75);
+    --badge-vet: oklch(0.720 0.130 38);
 
-    --sidebar: oklch(0.22 0.010 165);
-    --sidebar-foreground: oklch(0.95 0.008 80);
-    --sidebar-primary: oklch(0.65 0.14 35);
-    --sidebar-primary-foreground: oklch(0.18 0.008 165);
-    --sidebar-accent: oklch(0.27 0.012 165);
-    --sidebar-accent-foreground: oklch(0.95 0.008 80);
+    --sidebar: oklch(0.22 0.012 30);
+    --sidebar-foreground: oklch(0.95 0.012 80);
+    --sidebar-primary: oklch(0.720 0.130 38);
+    --sidebar-primary-foreground: oklch(0.18 0.010 30);
+    --sidebar-accent: oklch(0.27 0.014 30);
+    --sidebar-accent-foreground: oklch(0.95 0.012 80);
     --sidebar-border: oklch(1 0 0 / 8%);
-    --sidebar-ring: oklch(0.59 0.04 155);
+    --sidebar-ring: oklch(0.720 0.130 38);
 }
 
 @layer base {

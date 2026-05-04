@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pawmart · Option B — Warm Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #FAF6EE;
+      --card: #FFFFFF;
+      --fg: #2A1F12;
+      --muted: #6F5B40;
+      --line: #E8DEC8;
+      --accent: #B5651D; /* warm brown */
+      --sage: #6E8B5A;
+      --sale: #C0392B;
+    }
+    body { font-family: 'Pretendard', system-ui, sans-serif; background: var(--bg); color: var(--fg); }
+    .stamp { font-feature-settings: 'tnum'; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Top bar -->
+  <div class="bg-[var(--accent)] text-white text-xs py-1.5">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-10 flex items-center justify-between">
+      <p class="font-medium">🚚 5만원 이상 무료배송 · 오후 2시 전 주문 시 당일출고</p>
+      <div class="hidden md:flex items-center gap-4 text-[11px]">
+        <a href="#" class="hover:underline">고객센터</a>
+        <a href="#" class="hover:underline">배송조회</a>
+        <a href="#" class="hover:underline">로그인</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-[var(--bg)] border-b border-[var(--line)] sticky top-0 z-50">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-10">
+      <div class="flex items-center gap-3 md:gap-6 h-16 md:h-20">
+        <button class="md:hidden p-2 -ml-2" aria-label="메뉴">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <a href="#" class="flex items-center gap-2">
+          <span class="w-9 h-9 rounded-full bg-[var(--accent)] text-white grid place-items-center text-base font-bold">P</span>
+          <span class="text-xl md:text-2xl font-extrabold tracking-tight">Pawmart</span>
+        </a>
+        <!-- Search -->
+        <div class="hidden md:flex flex-1 max-w-2xl mx-auto">
+          <div class="flex w-full h-11 rounded-full border-2 border-[var(--accent)] bg-white overflow-hidden">
+            <input class="flex-1 px-5 text-sm bg-transparent focus:outline-none" placeholder="찾으시는 상품을 검색해 보세요" />
+            <button class="px-5 bg-[var(--accent)] text-white">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="ml-auto md:ml-0 flex items-center gap-1 md:gap-3">
+          <button class="md:hidden p-2" aria-label="검색">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+          <button class="p-2 hidden md:inline-flex flex-col items-center hover:text-[var(--accent)]" aria-label="찜">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span class="text-[10px] mt-0.5">찜</span>
+          </button>
+          <button class="p-2 flex flex-col items-center hover:text-[var(--accent)] relative" aria-label="장바구니">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 6h15l-1.5 9h-12L5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+            <span class="text-[10px] mt-0.5 hidden md:block">장바구니</span>
+            <span class="absolute top-1 right-0 md:top-0 md:right-1 min-w-4 h-4 px-1 rounded-full bg-[var(--sale)] text-white text-[10px] font-bold grid place-items-center">3</span>
+          </button>
+          <button class="p-2 hidden md:inline-flex flex-col items-center hover:text-[var(--accent)]" aria-label="마이">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+            <span class="text-[10px] mt-0.5">마이</span>
+          </button>
+        </div>
+      </div>
+      <!-- Sub nav -->
+      <nav class="hidden md:flex items-center gap-1 h-10 -mt-2 text-sm font-semibold">
+        <a href="#" class="px-3 py-1.5 rounded-full hover:bg-white">전체 카테고리 ☰</a>
+        <a href="#" class="px-3 py-1.5 hover:text-[var(--accent)]">강아지</a>
+        <a href="#" class="px-3 py-1.5 hover:text-[var(--accent)]">고양이</a>
+        <a href="#" class="px-3 py-1.5 hover:text-[var(--accent)]">소동물</a>
+        <a href="#" class="px-3 py-1.5 hover:text-[var(--accent)]">사료</a>
+        <a href="#" class="px-3 py-1.5 hover:text-[var(--accent)]">간식</a>
+        <a href="#" class="px-3 py-1.5 hover:text-[var(--accent)]">장난감</a>
+        <a href="#" class="px-3 py-1.5 hover:text-[var(--accent)]">의류·하네스</a>
+        <a href="#" class="ml-auto px-3 py-1.5 rounded-full bg-[var(--sale)] text-white">🔥 오늘만 특가</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile search -->
+  <div class="md:hidden px-4 py-3 bg-[var(--bg)] border-b border-[var(--line)]">
+    <div class="flex h-10 rounded-full border-2 border-[var(--accent)] bg-white overflow-hidden">
+      <input class="flex-1 px-4 text-sm bg-transparent focus:outline-none" placeholder="검색..." />
+      <button class="px-4 bg-[var(--accent)] text-white">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero / Main banner -->
+  <section class="px-4 md:px-6 lg:px-10 pt-4 md:pt-6">
+    <div class="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
+      <div class="lg:col-span-2 relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#E8C9A0] to-[#B5651D] aspect-[16/9] lg:aspect-[16/8]">
+        <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=1200&h=600&fit=crop" alt="" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-60" loading="lazy" />
+        <div class="relative h-full flex flex-col justify-end p-6 md:p-10 text-white">
+          <span class="inline-block w-fit text-[10px] tracking-[0.2em] font-bold uppercase bg-white/20 backdrop-blur px-3 py-1 rounded-full mb-3">2026 SS · 오픈 기념</span>
+          <h1 class="text-3xl md:text-5xl font-extrabold mb-2 leading-tight">최대 40% 할인<br />프리미엄 사료 페스타</h1>
+          <p class="text-sm md:text-base opacity-90">집사·견주 모두 주목하는 인기 브랜드 한정 특가</p>
+          <div class="flex gap-2 mt-5">
+            <a href="#" class="inline-flex items-center justify-center h-11 px-6 bg-white text-[var(--fg)] text-sm font-bold rounded-full hover:bg-[var(--bg)]">기획전 보기 →</a>
+          </div>
+          <div class="mt-6 flex gap-1.5">
+            <span class="w-8 h-1 bg-white rounded-full"></span>
+            <span class="w-2 h-1 bg-white/40 rounded-full"></span>
+            <span class="w-2 h-1 bg-white/40 rounded-full"></span>
+            <span class="w-2 h-1 bg-white/40 rounded-full"></span>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-1 gap-3 md:gap-4">
+        <a href="#" class="relative rounded-2xl overflow-hidden bg-[var(--sage)] text-white aspect-square lg:aspect-auto lg:flex-1 p-5 md:p-6 flex flex-col justify-between">
+          <div>
+            <p class="text-[10px] tracking-[0.2em] font-bold uppercase opacity-80">신규 가입</p>
+            <p class="text-xl md:text-2xl font-bold mt-1 leading-tight">10,000원<br />할인쿠폰</p>
+          </div>
+          <p class="text-xs opacity-80">지금 가입 →</p>
+        </a>
+        <a href="#" class="relative rounded-2xl overflow-hidden bg-white border border-[var(--line)] aspect-square lg:aspect-auto lg:flex-1 p-5 md:p-6 flex flex-col justify-between">
+          <div>
+            <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--accent)]">정기배송</p>
+            <p class="text-xl md:text-2xl font-bold mt-1 leading-tight">사료 10%<br />상시 할인</p>
+          </div>
+          <p class="text-xs text-[var(--muted)]">자세히 →</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick categories -->
+  <section class="px-4 md:px-6 lg:px-10 py-8">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-3">
+        <!-- chip cards -->
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">🐕</div><p class="text-xs font-bold">강아지</p></a>
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">🐈</div><p class="text-xs font-bold">고양이</p></a>
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">🥩</div><p class="text-xs font-bold">사료</p></a>
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">🍪</div><p class="text-xs font-bold">간식</p></a>
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">🎾</div><p class="text-xs font-bold">장난감</p></a>
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">🛁</div><p class="text-xs font-bold">목욕·미용</p></a>
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">🦴</div><p class="text-xs font-bold">건강</p></a>
+        <a class="bg-white border border-[var(--line)] rounded-2xl py-4 px-2 text-center hover:border-[var(--accent)] hover:shadow-sm" href="#"><div class="text-2xl mb-1">✨</div><p class="text-xs font-bold">신상품</p></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Today's deal -->
+  <section class="px-4 md:px-6 lg:px-10 pb-10">
+    <div class="max-w-[1440px] mx-auto bg-white rounded-2xl border border-[var(--line)] overflow-hidden">
+      <div class="flex items-end justify-between p-5 md:p-7 pb-4">
+        <div>
+          <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--sale)] mb-2">⏰ Today Only</p>
+          <h2 class="text-xl md:text-2xl font-extrabold">오늘의 핫딜</h2>
+          <p class="text-xs md:text-sm text-[var(--muted)] mt-1">남은 시간 <span class="stamp font-bold text-[var(--sale)]">14:32:08</span></p>
+        </div>
+        <a href="#" class="text-xs md:text-sm font-bold text-[var(--accent)]">전체 보기 →</a>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-px bg-[var(--line)] border-t border-[var(--line)]">
+        <!-- card -->
+        <article class="bg-white p-3 md:p-4 group hover:bg-[var(--bg)]">
+          <div class="aspect-square rounded-xl bg-[var(--bg)] mb-3 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=300&h=300&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
+            <span class="absolute top-2 left-2 text-[10px] font-bold bg-[var(--sale)] text-white px-2 py-0.5 rounded">40%</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted)] mb-1">강아지 · 사료</p>
+          <h3 class="text-sm font-semibold leading-snug line-clamp-2 mb-2 min-h-[36px]">프리미엄 그레인프리 연어 사료 2kg</h3>
+          <div class="flex items-baseline gap-2">
+            <span class="text-base md:text-lg font-extrabold text-[var(--sale)] stamp">27,000원</span>
+            <span class="text-xs text-[var(--muted)] line-through stamp">45,000원</span>
+          </div>
+          <div class="flex items-center gap-1 mt-2 text-[11px] text-[var(--muted)]">
+            <span class="text-yellow-500">★</span>
+            <span class="font-semibold text-[var(--fg)]">4.8</span>
+            <span>(1,283)</span>
+          </div>
+        </article>
+
+        <article class="bg-white p-3 md:p-4 group hover:bg-[var(--bg)]">
+          <div class="aspect-square rounded-xl bg-[var(--bg)] mb-3 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1574231164645-d6f0e8553590?w=300&h=300&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
+            <span class="absolute top-2 left-2 text-[10px] font-bold bg-[var(--sale)] text-white px-2 py-0.5 rounded">20%</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted)] mb-1">고양이 · 간식</p>
+          <h3 class="text-sm font-semibold leading-snug line-clamp-2 mb-2 min-h-[36px]">동결건조 닭가슴살 트릿 80g</h3>
+          <div class="flex items-baseline gap-2">
+            <span class="text-base md:text-lg font-extrabold text-[var(--sale)] stamp">12,800원</span>
+            <span class="text-xs text-[var(--muted)] line-through stamp">16,000원</span>
+          </div>
+          <div class="flex items-center gap-1 mt-2 text-[11px] text-[var(--muted)]">
+            <span class="text-yellow-500">★</span>
+            <span class="font-semibold text-[var(--fg)]">4.9</span>
+            <span>(842)</span>
+          </div>
+        </article>
+
+        <article class="bg-white p-3 md:p-4 group hover:bg-[var(--bg)]">
+          <div class="aspect-square rounded-xl bg-[var(--bg)] mb-3 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1591946614720-90a587da4a36?w=300&h=300&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
+            <span class="absolute top-2 left-2 text-[10px] font-bold bg-[var(--accent)] text-white px-2 py-0.5 rounded">BEST</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted)] mb-1">강아지 · 장난감</p>
+          <h3 class="text-sm font-semibold leading-snug line-clamp-2 mb-2 min-h-[36px]">노즈워크 스누피 매트 라지 사이즈</h3>
+          <div class="flex items-baseline gap-2">
+            <span class="text-base md:text-lg font-extrabold stamp">28,000원</span>
+          </div>
+          <div class="flex items-center gap-1 mt-2 text-[11px] text-[var(--muted)]">
+            <span class="text-yellow-500">★</span>
+            <span class="font-semibold text-[var(--fg)]">4.7</span>
+            <span>(421)</span>
+          </div>
+        </article>
+
+        <article class="bg-white p-3 md:p-4 group hover:bg-[var(--bg)]">
+          <div class="aspect-square rounded-xl bg-[var(--bg)] mb-3 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1600077029991-7b6e021d2c0b?w=300&h=300&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
+            <span class="absolute top-2 left-2 text-[10px] font-bold bg-[var(--sage)] text-white px-2 py-0.5 rounded">친환경</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted)] mb-1">고양이 · 모래</p>
+          <h3 class="text-sm font-semibold leading-snug line-clamp-2 mb-2 min-h-[36px]">두부 응고 모래 6L (3팩)</h3>
+          <div class="flex items-baseline gap-2">
+            <span class="text-base md:text-lg font-extrabold stamp">32,400원</span>
+          </div>
+          <div class="flex items-center gap-1 mt-2 text-[11px] text-[var(--muted)]">
+            <span class="text-yellow-500">★</span>
+            <span class="font-semibold text-[var(--fg)]">4.6</span>
+            <span>(2,041)</span>
+          </div>
+        </article>
+
+        <article class="bg-white p-3 md:p-4 group hover:bg-[var(--bg)] hidden lg:block">
+          <div class="aspect-square rounded-xl bg-[var(--bg)] mb-3 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=300&h=300&fit=crop" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
+            <span class="absolute top-2 left-2 text-[10px] font-bold bg-[var(--sale)] text-white px-2 py-0.5 rounded">15%</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted)] mb-1">강아지 · 케어</p>
+          <h3 class="text-sm font-semibold leading-snug line-clamp-2 mb-2 min-h-[36px]">오가닉 비건 샴푸 500ml</h3>
+          <div class="flex items-baseline gap-2">
+            <span class="text-base md:text-lg font-extrabold text-[var(--sale)] stamp">19,100원</span>
+            <span class="text-xs text-[var(--muted)] line-through stamp">22,500원</span>
+          </div>
+          <div class="flex items-center gap-1 mt-2 text-[11px] text-[var(--muted)]">
+            <span class="text-yellow-500">★</span>
+            <span class="font-semibold text-[var(--fg)]">4.5</span>
+            <span>(312)</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Two-column promo -->
+  <section class="px-4 md:px-6 lg:px-10 pb-10">
+    <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+      <a href="#" class="rounded-2xl overflow-hidden bg-[#F1E4D0] aspect-[2/1] relative p-6 md:p-8 flex flex-col justify-between">
+        <div>
+          <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--accent)] mb-2">신규 입점</p>
+          <h3 class="text-xl md:text-2xl font-extrabold leading-snug">유기농 처방<br />사료 브랜드 모음</h3>
+        </div>
+        <p class="text-xs font-bold text-[var(--fg)]">살펴보기 →</p>
+      </a>
+      <a href="#" class="rounded-2xl overflow-hidden bg-[#DDE7CD] aspect-[2/1] relative p-6 md:p-8 flex flex-col justify-between">
+        <div>
+          <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--sage)] mb-2">베스트 셀러</p>
+          <h3 class="text-xl md:text-2xl font-extrabold leading-snug">집사가 가장 많이<br />산 고양이 용품</h3>
+        </div>
+        <p class="text-xs font-bold text-[var(--fg)]">랭킹 보기 →</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Care guide -->
+  <section class="px-4 md:px-6 lg:px-10 py-12 md:py-16">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="flex items-end justify-between mb-6 md:mb-8">
+        <div>
+          <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--sage)] mb-2">📖 Care Guide</p>
+          <h2 class="text-xl md:text-3xl font-extrabold">전문가가 알려주는 펫 케어</h2>
+        </div>
+        <a class="text-xs md:text-sm font-bold text-[var(--accent)]" href="#">전체 보기 →</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+        <article class="bg-white rounded-2xl border border-[var(--line)] overflow-hidden hover:border-[var(--accent)]">
+          <div class="aspect-[16/10] bg-[var(--bg)]">
+            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=400&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="p-5">
+            <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--accent)] mb-2">입양 가이드</p>
+            <h3 class="font-bold text-base md:text-lg leading-snug mb-2">첫 강아지를 입양했다면 — 첫 달 체크리스트</h3>
+            <p class="text-xs text-[var(--muted)] line-clamp-2">예방접종부터 사회화 훈련까지, 전문가의 단계별 안내.</p>
+          </div>
+        </article>
+        <article class="bg-white rounded-2xl border border-[var(--line)] overflow-hidden hover:border-[var(--accent)]">
+          <div class="aspect-[16/10] bg-[var(--bg)]">
+            <img src="https://images.unsplash.com/photo-1574231164645-d6f0e8553590?w=600&h=400&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="p-5">
+            <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--accent)] mb-2">영양 가이드</p>
+            <h3 class="font-bold text-base md:text-lg leading-snug mb-2">고양이 영양 핵심 5가지 — 단백질부터 수분까지</h3>
+            <p class="text-xs text-[var(--muted)] line-clamp-2">고양이의 식단을 결정짓는 영양 요소를 정리했어요.</p>
+          </div>
+        </article>
+        <article class="bg-white rounded-2xl border border-[var(--line)] overflow-hidden hover:border-[var(--accent)]">
+          <div class="aspect-[16/10] bg-[var(--bg)]">
+            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&h=400&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="p-5">
+            <p class="text-[10px] tracking-[0.2em] font-bold uppercase text-[var(--accent)] mb-2">시즌 가이드</p>
+            <h3 class="font-bold text-base md:text-lg leading-snug mb-2">환절기 반려동물 건강 관리법</h3>
+            <p class="text-xs text-[var(--muted)] line-clamp-2">기온 변화에 따른 산책·실내 환경 체크포인트.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#3F2D1A] text-white">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-10 py-10 md:py-14">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-10">
+        <div class="col-span-2 md:col-span-2">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="w-8 h-8 rounded-full bg-[var(--accent)] grid place-items-center font-bold">P</span>
+            <span class="text-xl font-extrabold">Pawmart</span>
+          </div>
+          <p class="text-xs text-white/70 leading-relaxed mb-4">반려동물과 보호자를 위한 큐레이션 마켓.<br />좋은 제품을 합리적 가격에.</p>
+          <div class="text-[11px] text-white/50 space-y-1">
+            <p>고객센터 1588-0000 · 평일 09:00-18:00</p>
+            <p>(주)펫마트 · 대표 홍길동 · 사업자 000-00-00000</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-[10px] tracking-[0.2em] font-bold uppercase mb-4">Shop</p>
+          <ul class="space-y-2 text-sm text-white/70"><li><a href="#">강아지</a></li><li><a href="#">고양이</a></li><li><a href="#">소동물</a></li></ul>
+        </div>
+        <div>
+          <p class="text-[10px] tracking-[0.2em] font-bold uppercase mb-4">Help</p>
+          <ul class="space-y-2 text-sm text-white/70"><li><a href="#">FAQ</a></li><li><a href="#">배송 안내</a></li><li><a href="#">반품·교환</a></li></ul>
+        </div>
+        <div>
+          <p class="text-[10px] tracking-[0.2em] font-bold uppercase mb-4">About</p>
+          <ul class="space-y-2 text-sm text-white/70"><li><a href="#">브랜드</a></li><li><a href="#">매거진</a></li><li><a href="#">이용약관</a></li></ul>
+        </div>
+      </div>
+      <div class="pt-6 border-t border-white/10 text-[11px] text-white/40">© 2026 PAWMART · ALL RIGHTS RESERVED</div>
+    </div>
+  </footer>
+
+  <a href="./index.html" class="fixed bottom-4 right-4 inline-flex items-center gap-2 bg-white border border-[var(--accent)] text-[var(--accent)] px-4 py-2 text-xs font-bold tracking-widest uppercase shadow-lg rounded-full hover:bg-[var(--accent)] hover:text-white">← 시안 비교</a>
+</body>
+</html>

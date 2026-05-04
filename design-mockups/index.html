@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pawmart 디자인 시안 비교</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700;900&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .editorial { font-family: 'Playfair Display', serif; }
+  </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900 min-h-screen">
+  <header class="border-b border-neutral-200 bg-white">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-8">
+      <p class="text-[11px] tracking-[0.3em] font-bold text-neutral-500 uppercase mb-2">PAWMART · DESIGN PROPOSALS</p>
+      <h1 class="editorial text-3xl md:text-5xl font-bold leading-tight">전체 레이아웃 시안 4종</h1>
+      <p class="mt-3 text-sm md:text-base text-neutral-600 max-w-2xl">
+        모바일 퍼스트 + FHD(1920) 기준으로 작업한 시안입니다. 브라우저 폭을 줄였다 늘리며 반응형도 확인해 보세요.
+        <br /><b class="text-[#E07856]">⭐ 시안 D</b>는 포트폴리오 + 한국 사용자 친화 관점에서 권장하는 하이브리드 시안입니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="max-w-[1440px] mx-auto px-6 lg:px-12 py-12 lg:py-16">
+    <div class="grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <!-- A -->
+      <a
+        href="./option-a-minimal.html"
+        class="group block bg-white border border-neutral-200 hover:border-neutral-900 transition-colors p-6 lg:p-8"
+      >
+        <div class="aspect-[4/3] bg-neutral-100 mb-6 overflow-hidden">
+          <div class="w-full h-full bg-gradient-to-br from-white to-neutral-200 flex items-end p-6">
+            <div>
+              <p class="editorial text-3xl lg:text-4xl font-bold leading-none">Minimal</p>
+              <p class="editorial text-3xl lg:text-4xl font-bold leading-none">Editorial</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-[10px] tracking-[0.3em] font-bold text-neutral-500 uppercase mb-2">Option A</p>
+        <h2 class="editorial text-2xl font-bold mb-2">미니멀 에디토리얼</h2>
+        <p class="text-sm text-neutral-600 leading-relaxed mb-4">
+          흑백 + 1 accent. 큰 타이포와 넓은 여백. 정보보다 분위기 우선.
+        </p>
+        <ul class="text-xs text-neutral-500 space-y-1 mb-4">
+          <li>· 무신사 / 29CM 톤</li>
+          <li>· max-w 1440px, 4단 그리드</li>
+          <li>· 텍스트 중심, 미니멀 컬러</li>
+        </ul>
+        <span class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest border-b border-neutral-900 pb-0.5 group-hover:gap-2 transition-all">
+          시안 보기 →
+        </span>
+      </a>
+
+      <!-- B -->
+      <a
+        href="./option-b-warm.html"
+        class="group block bg-[#FAF6EE] border border-[#E8DEC8] hover:border-[#7A5C3A] transition-colors p-6 lg:p-8"
+      >
+        <div class="aspect-[4/3] bg-[#F1E9D5] mb-6 overflow-hidden">
+          <div class="w-full h-full bg-gradient-to-br from-[#FAF6EE] to-[#D9C9A1] flex items-end p-6">
+            <div>
+              <p class="text-3xl lg:text-4xl font-bold leading-none text-[#5B4023]">Warm</p>
+              <p class="text-3xl lg:text-4xl font-bold leading-none text-[#5B4023]">Market</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-[10px] tracking-[0.3em] font-bold text-[#7A5C3A] uppercase mb-2">Option B</p>
+        <h2 class="text-2xl font-bold mb-2 text-[#3F2D1A]">웜 마켓플레이스</h2>
+        <p class="text-sm text-[#5B4023] leading-relaxed mb-4">
+          크림 배경 + 따뜻한 brown/sage. 정보 밀도가 높은 실속형.
+        </p>
+        <ul class="text-xs text-[#7A5C3A] space-y-1 mb-4">
+          <li>· 마켓컬리 / Chewy 톤</li>
+          <li>· 모바일 2열, FHD 5열</li>
+          <li>· 가격·할인·별점 노출 강조</li>
+        </ul>
+        <span class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest border-b border-[#3F2D1A] pb-0.5 group-hover:gap-2 transition-all text-[#3F2D1A]">
+          시안 보기 →
+        </span>
+      </a>
+
+      <!-- C -->
+      <a
+        href="./option-c-playful.html"
+        class="group block bg-white border-2 border-[#FFD9CC] hover:border-[#FF8A65] transition-colors p-6 lg:p-8 rounded-3xl"
+      >
+        <div class="aspect-[4/3] bg-gradient-to-br from-[#FFE8D6] via-[#D6F5E3] to-[#E5DEFF] mb-6 overflow-hidden rounded-2xl flex items-end p-6">
+          <div>
+            <p class="text-3xl lg:text-4xl font-black leading-none text-[#3D2C2A]">Playful</p>
+            <p class="text-3xl lg:text-4xl font-black leading-none text-[#3D2C2A]">Pet 🐾</p>
+          </div>
+        </div>
+        <p class="text-[10px] tracking-[0.3em] font-bold text-[#FF8A65] uppercase mb-2">Option C</p>
+        <h2 class="text-2xl font-bold mb-2 text-[#3D2C2A]">플레이풀 펫</h2>
+        <p class="text-sm text-neutral-600 leading-relaxed mb-4">
+          파스텔 컬러 + 둥근 카드 + 일러스트. 친근하고 따뜻한 펫 전용.
+        </p>
+        <ul class="text-xs text-neutral-500 space-y-1 mb-4">
+          <li>· Petsmart / 캐릭터 펫몰 톤</li>
+          <li>· rounded-3xl 카드, 비대칭 그리드</li>
+          <li>· 펫 이모지·일러스트 활용</li>
+        </ul>
+        <span class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest border-b-2 border-[#FF8A65] pb-0.5 group-hover:gap-2 transition-all text-[#FF8A65]">
+          시안 보기 →
+        </span>
+      </a>
+
+      <!-- D — 추천 -->
+      <a
+        href="./option-d-modern-korean.html"
+        class="group block bg-white border-2 border-[#E07856] hover:border-[#1F1916] transition-colors p-6 lg:p-8 rounded-3xl relative overflow-hidden"
+      >
+        <span class="absolute top-4 right-4 inline-flex items-center gap-1 text-[10px] font-bold tracking-widest uppercase bg-[#1F1916] text-white px-2.5 py-1 rounded-full z-10">⭐ 추천</span>
+        <div class="aspect-[4/3] bg-gradient-to-br from-[#FFE3D6] via-[#FBF7F1] to-[#E5EFD7] mb-6 overflow-hidden rounded-2xl flex items-end p-6 relative">
+          <span class="absolute top-3 left-3 text-2xl">🐾</span>
+          <div>
+            <p class="text-3xl lg:text-4xl font-black leading-none text-[#1F1916]">Modern</p>
+            <p class="text-3xl lg:text-4xl font-black leading-none text-[#E07856]">Korean Pet</p>
+          </div>
+        </div>
+        <p class="text-[10px] tracking-[0.3em] font-bold text-[#E07856] uppercase mb-2">Option D · Hybrid</p>
+        <h2 class="text-2xl font-black mb-2 text-[#1F1916]">모던 코리안 펫</h2>
+        <p class="text-sm text-[#6B5757] leading-relaxed mb-4">
+          B의 정보 밀도 + C의 친근함 + 2026 트렌드. 포트폴리오·한국 사용자 둘 다 만족.
+        </p>
+        <ul class="text-xs text-[#6B5757] space-y-1 mb-4">
+          <li>· Bento grid + 퍼스널라이즈</li>
+          <li>· 모바일 sticky bottom CTA</li>
+          <li>· 가격·할인·별점·배송 모두 노출</li>
+          <li>· Pretendard + 마이크로 인터랙션</li>
+        </ul>
+        <span class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest border-b-2 border-[#E07856] pb-0.5 group-hover:gap-2 transition-all text-[#E07856]">
+          시안 보기 →
+        </span>
+      </a>
+    </div>
+
+    <div class="mt-16 p-6 lg:p-8 border border-neutral-200 bg-white">
+      <p class="text-[11px] tracking-[0.3em] font-bold text-neutral-500 uppercase mb-3">검토 포인트</p>
+      <ul class="text-sm text-neutral-700 space-y-2 leading-relaxed">
+        <li>· <b>레이아웃 시스템</b> — 컨테이너 폭, 그리드, 여백, breakpoint</li>
+        <li>· <b>모바일 퍼스트</b> — 360px 기준에서 자연스럽게 동작하는지</li>
+        <li>· <b>FHD(1920) 최적화</b> — max-w 1440px가 양옆 240px 여백을 만듭니다. 더 넓혀도 됨</li>
+        <li>· <b>정보 밀도</b> — A는 절제, B는 풍부, C는 균형</li>
+        <li>· <b>도메인 적합성</b> — 펫 도메인의 따뜻함 vs 미니멀의 세련됨</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="border-t border-neutral-200 mt-12 py-8">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12 text-xs text-neutral-500">
+      Pawmart · Internal design review
+    </div>
+  </footer>
+</body>
+</html>

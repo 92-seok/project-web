@@ -1,6 +1,8 @@
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
-import { MOCK_PRODUCTS } from '@/data/mockProducts';
+import { productApi } from '@/api/productApi';
+import { toIProduct } from '@/hooks/useProducts';
+import type { IProduct } from '@/types/product';
 import { SearchDropdown } from './SearchDropdown';
 
 const POPULAR_KEYWORDS = ['강아지 사료', '고양이 간식', '프리미엄 사료', '강아지 장난감', '고양이 모래'];
@@ -37,15 +39,36 @@ export function SearchBar({
   const [value, setValue] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>(loadRecentSearches);
+  const [fetchedSuggestions, setFetchedSuggestions] = useState<IProduct[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const suggestions = useMemo(() => {
-    if (value.trim().length < 1) return [];
-    return MOCK_PRODUCTS.filter((p) =>
-      p.name.toLowerCase().includes(value.toLowerCase())
-    ).slice(0, 5);
-  }, [value]);
+  // 입력값이 비면 fetch 결과를 표시할 필요 없으므로 빈 배열로 derive
+  const trimmed = value.trim();
+  const suggestions = trimmed.length < 1 ? [] : fetchedSuggestions;
+
+  // 디바운스 검색: 입력 후 300ms 동안 추가 입력이 없으면 API 호출
+  useEffect(() => {
+    if (trimmed.length < 1) return;
+
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      productApi
+        .getProducts({ keyword: trimmed, size: 5 })
+        .then((res) => {
+          if (cancelled) return;
+          setFetchedSuggestions(res.content.map(toIProduct));
+        })
+        .catch(() => {
+          if (!cancelled) setFetchedSuggestions([]);
+        });
+    }, 300);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [trimmed]);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {

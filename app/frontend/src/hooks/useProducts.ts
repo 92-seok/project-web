@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { productApi } from '@/api/productApi';
 import type { IProductDetailResponse, IProductPage, IGetProductsParams } from '@/api/productApi';
 import type { IProduct, IProductDetail } from '@/types/product';
-import { MOCK_PRODUCTS, getProductDetail } from '@/data/mockProducts';
 
 // ── 매퍼 ─────────────────────────────────────────────────────────────────────
 
@@ -72,29 +71,11 @@ export function useProducts(params: IGetProductsParams) {
       .then((res) => {
         if (!cancelled) setData(res);
       })
-      .catch(() => {
+      .catch((err: unknown) => {
         if (cancelled) return;
-        console.warn('[useProducts] API 호출 실패 — mock 데이터로 폴백합니다.');
-        const mockPage: IProductPage = {
-          content: MOCK_PRODUCTS.map((p) => ({
-            id: p.id,
-            name: p.name,
-            price: p.price,
-            originalPrice: p.originalPrice ?? null,
-            imageUrl: p.imageUrl,
-            badge: p.badge ?? null,
-            category: p.category,
-            petType: p.category,
-            rating: p.rating,
-            reviewCount: p.reviewCount,
-          })),
-          page: 0,
-          size: 20,
-          totalElements: MOCK_PRODUCTS.length,
-          totalPages: 1,
-          last: true,
-        };
-        setData(mockPage);
+        console.error('[useProducts] API 호출 실패:', err);
+        setError('상품 목록을 불러올 수 없습니다');
+        setData(null);
       })
       .finally(() => {
         if (!cancelled) setIsLoading(false);
@@ -140,13 +121,8 @@ export function useProduct(id: number) {
           setIsNotFound(true);
           return;
         }
-        console.warn('[useProduct] API 호출 실패 — mock 데이터로 폴백합니다. id:', id);
-        const mockDetail = getProductDetail(id);
-        if (mockDetail) {
-          setData(mockDetail);
-        } else {
-          setIsNotFound(true);
-        }
+        console.error('[useProduct] API 호출 실패. id:', id, err);
+        setError('상품 정보를 불러올 수 없습니다');
       })
       .finally(() => {
         if (!cancelled) setIsLoading(false);

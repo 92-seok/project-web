@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, ShoppingCart, Users, Menu, X, LogOut } from 'lucide-react';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { LayoutDashboard, Package, PackagePlus, Boxes, ShoppingCart, Users, Menu, X, LogOut } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 
 interface INavItem {
@@ -12,6 +12,8 @@ interface INavItem {
 const NAV_ITEMS: INavItem[] = [
   { label: '대시보드', path: '/admin', icon: <LayoutDashboard size={18} /> },
   { label: '상품관리', path: '/admin/products', icon: <Package size={18} /> },
+  { label: '상품등록', path: '/admin/products/new', icon: <PackagePlus size={18} /> },
+  { label: '재고관리', path: '/admin/stock', icon: <Boxes size={18} /> },
   { label: '주문관리', path: '/admin/orders', icon: <ShoppingCart size={18} /> },
   { label: '회원관리', path: '/admin/members', icon: <Users size={18} /> },
 ];
@@ -38,29 +40,35 @@ export function AdminLayout() {
   }
 
   return (
-    <div className='min-h-screen flex bg-secondary'>
+    <div className='min-h-screen flex bg-background'>
       {/* 모바일 오버레이 */}
       {isSidebarOpen && (
         <div
-          className='fixed inset-0 bg-black/50 z-20 lg:hidden'
+          className='fixed inset-0 bg-foreground/50 z-20 lg:hidden'
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
-      {/* 사이드바 */}
+      {/* 사이드바 — sticky + h-screen으로 lg에서 화면 100% 채움 */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-64 bg-primary text-white z-30 flex flex-col
+          fixed top-0 left-0 h-screen w-64 bg-sidebar text-sidebar-foreground z-30 flex flex-col
           transition-transform duration-200
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:translate-x-0 lg:static lg:z-auto
+          lg:translate-x-0 lg:sticky lg:top-0 lg:z-auto lg:shrink-0
         `}
       >
-        <div className='p-6 border-b border-white/10'>
-          <span className='text-sm font-bold tracking-[0.2em] uppercase'>PAWMART ADMIN</span>
+        <div className='px-6 py-6 border-b border-sidebar-border'>
+          <Link to='/' className='flex items-center gap-2'>
+            <span className='inline-flex w-9 h-9 rounded-2xl bg-accent text-accent-foreground items-center justify-center text-base font-black'>P</span>
+            <div>
+              <p className='font-editorial text-base font-bold leading-tight'>Pawmart</p>
+              <p className='text-[10px] tracking-[0.2em] uppercase text-sidebar-foreground/60'>Admin</p>
+            </div>
+          </Link>
         </div>
 
-        <nav className='flex-1 py-4'>
+        <nav className='flex-1 py-4 px-3'>
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.path}
@@ -68,10 +76,10 @@ export function AdminLayout() {
               end={item.path === '/admin'}
               onClick={() => setIsSidebarOpen(false)}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-6 py-3 text-sm transition-colors ${
+                `flex items-center gap-3 px-3 py-2.5 my-0.5 rounded-xl text-sm transition-colors ${
                   isActive
-                    ? 'bg-white/10 text-white font-medium'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                    ? 'bg-sidebar-primary text-sidebar-primary-foreground font-semibold'
+                    : 'text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent'
                 }`
               }
             >
@@ -81,12 +89,21 @@ export function AdminLayout() {
           ))}
         </nav>
 
-        <div className='p-4 border-t border-white/10'>
+        <div className='p-3 border-t border-sidebar-border'>
+          <div className='flex items-center gap-3 px-3 py-2 mb-2'>
+            <span className='w-9 h-9 rounded-full bg-sidebar-accent grid place-items-center text-sm font-bold'>
+              {user.name.charAt(0)}
+            </span>
+            <div className='flex-1 min-w-0'>
+              <p className='text-xs font-semibold truncate'>{user.name}</p>
+              <p className='text-[10px] text-sidebar-foreground/60 truncate'>{user.loginId}</p>
+            </div>
+          </div>
           <button
             onClick={handleLogout}
-            className='flex items-center gap-3 w-full px-2 py-2 text-sm text-white/60 hover:text-white transition-colors'
+            className='flex items-center gap-3 w-full px-3 py-2 rounded-xl text-sm text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors'
           >
-            <LogOut size={18} />
+            <LogOut size={16} />
             로그아웃
           </button>
         </div>
@@ -95,21 +112,21 @@ export function AdminLayout() {
       {/* 메인 영역 */}
       <div className='flex-1 flex flex-col min-w-0'>
         {/* 상단 헤더 */}
-        <header className='h-14 bg-white border-b border-black/10 flex items-center px-6 gap-4 shrink-0'>
+        <header className='h-14 bg-card border-b border-border flex items-center px-6 gap-4 shrink-0 lg:hidden'>
           <button
             onClick={() => setIsSidebarOpen((v) => !v)}
-            className='lg:hidden text-primary'
+            className='text-foreground'
             aria-label='메뉴 열기'
           >
             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
-          <span className='text-xs font-bold tracking-[0.15em] uppercase text-primary/40'>
+          <span className='text-xs font-bold tracking-[0.15em] uppercase text-foreground/60'>
             ADMIN PANEL
           </span>
         </header>
 
         <main className='flex-1 overflow-auto'>
-          <div className='max-w-[1440px] mx-auto p-6 lg:p-8 xl:p-10'>
+          <div className='max-w-[1440px] mx-auto p-5 md:p-8 lg:p-10'>
             <Outlet />
           </div>
         </main>

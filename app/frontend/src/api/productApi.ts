@@ -12,6 +12,7 @@ export interface IProductSummary {
   petType: string;
   rating: number;
   reviewCount: number;
+  stock: number;
 }
 
 export interface IProductDetailResponse extends IProductSummary {

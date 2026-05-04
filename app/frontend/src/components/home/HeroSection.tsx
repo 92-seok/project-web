@@ -70,11 +70,9 @@ export function HeroSection() {
   return (
     <div
       className='
-        relative overflow-hidden bg-secondary
+        relative overflow-hidden bg-secondary rounded-2xl
         aspect-[4/5] sm:aspect-[16/9]
-        lg:aspect-auto lg:h-[480px] xl:h-[560px] 2xl:h-[640px]
-        md:rounded-2xl md:mx-4 md:mt-4 lg:mx-8
-        max-w-[1440px] xl:mx-auto
+        lg:aspect-auto lg:h-full lg:min-h-[480px] xl:min-h-[560px] 2xl:min-h-[640px]
       '
     >
       {/* 배경 이미지 — Unsplash 큐레이션, 깨지면 placedog/placekitten으로 폴백 */}
@@ -91,12 +89,12 @@ export function HeroSection() {
         className='absolute inset-0 w-full h-full object-cover animate-in fade-in duration-700 motion-reduce:animate-none'
       />
 
-      {/* 그라데이션 오버레이 — Forest 톤 (검정 X, 따뜻함 유지) */}
+      {/* 그라데이션 오버레이 — Warm Black 톤 (검정 X, 따뜻함 유지) */}
       <div
         className={`absolute inset-0 ${
           isLeft
-            ? 'bg-gradient-to-r from-[#1F2A26]/80 via-[#1F2A26]/35 to-transparent'
-            : 'bg-gradient-to-l from-[#1F2A26]/80 via-[#1F2A26]/35 to-transparent'
+            ? 'bg-gradient-to-r from-foreground/80 via-foreground/35 to-transparent'
+            : 'bg-gradient-to-l from-foreground/80 via-foreground/35 to-transparent'
         }`}
       />
 
@@ -107,13 +105,13 @@ export function HeroSection() {
           isLeft ? 'left-6 md:left-16' : 'right-6 md:right-16 text-right'
         } animate-in fade-in slide-in-from-bottom-3 duration-700 motion-reduce:animate-none max-w-[90%] md:max-w-md`}
       >
-        <p className='text-[11px] tracking-[0.3em] font-semibold text-[#FAF7F2]/80 uppercase mb-3'>
+        <p className='text-[11px] tracking-[0.3em] font-semibold text-white/80 uppercase mb-3'>
           {slide.eyebrow}
         </p>
-        <h2 className='font-editorial text-[2rem] md:text-[3.25rem] font-bold text-[#FAF7F2] leading-[1.05] whitespace-pre-line'>
+        <h2 className='font-editorial text-[2rem] md:text-[3.25rem] font-bold text-white leading-[1.05] whitespace-pre-line'>
           {slide.title}
         </h2>
-        <p className='text-sm md:text-base text-[#FAF7F2]/85 mt-3 mb-6 max-w-sm leading-relaxed'>
+        <p className='text-sm md:text-base text-white/85 mt-3 mb-6 max-w-sm leading-relaxed'>
           {slide.subtitle}
         </p>
         <Link
@@ -144,14 +142,14 @@ export function HeroSection() {
         <button
           onClick={prev}
           aria-label='이전 슬라이드'
-          className='w-9 h-9 rounded-full flex items-center justify-center bg-[#FAF7F2]/15 backdrop-blur-sm text-white hover:bg-[#FAF7F2]/30 transition-colors'
+          className='w-9 h-9 rounded-full flex items-center justify-center bg-white/15 backdrop-blur-sm text-white hover:bg-white/30 transition-colors'
         >
           <ChevronLeft className='w-4 h-4' />
         </button>
         <button
           onClick={next}
           aria-label='다음 슬라이드'
-          className='w-9 h-9 rounded-full flex items-center justify-center bg-[#FAF7F2]/15 backdrop-blur-sm text-white hover:bg-[#FAF7F2]/30 transition-colors'
+          className='w-9 h-9 rounded-full flex items-center justify-center bg-white/15 backdrop-blur-sm text-white hover:bg-white/30 transition-colors'
         >
           <ChevronRight className='w-4 h-4' />
         </button>

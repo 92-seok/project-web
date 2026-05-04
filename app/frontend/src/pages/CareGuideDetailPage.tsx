@@ -1,7 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { CARE_GUIDES, type ICareGuide, type ICareGuideSection } from '@/data/careGuides';
-import { MOCK_PRODUCTS } from '@/data/mockProducts';
+import { productApi } from '@/api/productApi';
+import { toIProduct } from '@/hooks/useProducts';
+import type { IProduct } from '@/types/product';
 import { ProductCard } from '@/components/home/ProductCard';
 
 function formatDate(dateStr: string) {
@@ -52,10 +54,33 @@ function renderSection(section: ICareGuideSection, idx: number) {
 }
 
 function RelatedProductsSection({ productIds }: { productIds: number[] }) {
-  const products = useMemo(
-    () => MOCK_PRODUCTS.filter((p) => productIds.includes(p.id)).slice(0, 4),
-    [productIds],
-  );
+  const [fetched, setFetched] = useState<IProduct[]>([]);
+
+  // productIds 배열은 부모 렌더마다 새로 생성될 수 있어 키로 직렬화하여 의존성 비교
+  const idsKey = useMemo(() => productIds.slice(0, 4).join(','), [productIds]);
+
+  // 빈 idsKey면 fetched 결과 무시 — derive로 처리해 effect 내 동기 setState 회피
+  const products = idsKey ? fetched : [];
+
+  useEffect(() => {
+    if (!idsKey) return;
+
+    let cancelled = false;
+    const ids = idsKey.split(',').map(Number).filter((n) => !isNaN(n));
+
+    Promise.allSettled(ids.map((id) => productApi.getProduct(id)))
+      .then((results) => {
+        if (cancelled) return;
+        const fulfilled = results
+          .filter((r): r is PromiseFulfilledResult<Awaited<ReturnType<typeof productApi.getProduct>>> => r.status === 'fulfilled')
+          .map((r) => toIProduct(r.value));
+        setFetched(fulfilled);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [idsKey]);
 
   if (products.length === 0) return null;
 

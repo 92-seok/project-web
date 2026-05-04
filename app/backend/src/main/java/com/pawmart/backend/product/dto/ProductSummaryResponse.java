@@ -14,7 +14,8 @@ public record ProductSummaryResponse(
     String category,
     String petType,
     BigDecimal rating,
-    int reviewCount) {
+    int reviewCount,
+    int stock) {
 
   public static ProductSummaryResponse from(Product p) {
     return new ProductSummaryResponse(
@@ -27,6 +28,7 @@ public record ProductSummaryResponse(
         p.getCategory(),
         p.getPetType(),
         p.getRating(),
-        p.getReviewCount());
+        p.getReviewCount(),
+        p.getStock());
   }
 }

@@ -18,6 +18,9 @@ const NAV_ITEMS: INavItem[] = [
 export function BottomNavBar() {
   const { pathname } = useLocation();
 
+  // admin 영역에서는 자체 사이드바를 사용하므로 모바일 bottom nav 숨김
+  if (pathname.startsWith('/admin')) return null;
+
   return (
     <nav
       className='md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 bg-background/95 backdrop-blur-md border-t border-border'

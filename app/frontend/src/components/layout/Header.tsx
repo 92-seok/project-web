@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { LogIn, Search, ShoppingCart, User } from "lucide-react";
+import { LogIn, Search, ShoppingCart, User, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useCartStore } from "@/store/cartStore";
@@ -69,6 +69,17 @@ export function Header() {
 
           {/* 우측 영역: 펫 프로필 칩 + 아이콘 */}
           <div className="flex items-center gap-2 flex-1 justify-end">
+            {/* 관리자 진입 — admin 계정만 노출 */}
+            {isLoggedIn && user?.role === 'ADMIN' && (
+              <Link
+                to="/admin"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground text-background text-xs font-bold hover:bg-accent transition-colors"
+                aria-label="관리자 페이지"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" strokeWidth={2} />
+                <span className="hidden sm:inline">관리자</span>
+              </Link>
+            )}
             <PetProfileChip />
             {/* 모바일 검색 */}
             <Button

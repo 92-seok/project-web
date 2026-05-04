@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { DashboardPage } from '@/pages/admin/DashboardPage';
 import { ProductManagePage } from '@/pages/admin/ProductManagePage';
+import { ProductCreatePage } from '@/pages/admin/ProductCreatePage';
+import { StockManagePage } from '@/pages/admin/StockManagePage';
 import { OrderManagePage } from '@/pages/admin/OrderManagePage';
 import { MemberManagePage } from '@/pages/admin/MemberManagePage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -24,6 +26,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PaymentSuccessPage } from '@/pages/PaymentSuccessPage';
 import { PaymentFailPage } from '@/pages/PaymentFailPage';
 import { PrivateRoute } from '@/components/PrivateRoute';
+import { AdminRoute } from '@/components/AdminRoute';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ScrollToTop } from '@/components/ScrollToTop';
@@ -169,9 +172,18 @@ function App() {
         {/* 토스페이먼츠 리다이렉트 — PrivateRoute 밖에 위치 (비로그인 상태로 돌아올 수 있음) */}
         <Route path='/payment/success' element={<PaymentSuccessPage />} />
         <Route path='/payment/fail' element={<PaymentFailPage />} />
-        <Route path='/admin' element={<AdminLayout />}>
+        <Route
+          path='/admin'
+          element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }
+        >
           <Route index element={<DashboardPage />} />
           <Route path='products' element={<ProductManagePage />} />
+          <Route path='products/new' element={<ProductCreatePage />} />
+          <Route path='stock' element={<StockManagePage />} />
           <Route path='orders' element={<OrderManagePage />} />
           <Route path='members' element={<MemberManagePage />} />
         </Route>

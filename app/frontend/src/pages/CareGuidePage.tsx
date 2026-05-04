@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Dog, Cat, type LucideIcon } from 'lucide-react';
 import { CARE_GUIDES, type ICareGuide } from '@/data/careGuides';
 
 type TagFilter = '전체' | ICareGuide['tag'];
@@ -133,20 +134,21 @@ export function CareGuidePage() {
         <div className='flex items-center gap-2'>
           {(
             [
-              { value: 'all', label: '전체' },
-              { value: 'dog', label: '🐶 강아지' },
-              { value: 'cat', label: '🐱 고양이' },
-            ] as { value: PetFilter; label: string }[]
-          ).map(({ value, label }) => (
+              { value: 'all', label: '전체', Icon: null },
+              { value: 'dog', label: '강아지', Icon: Dog },
+              { value: 'cat', label: '고양이', Icon: Cat },
+            ] as { value: PetFilter; label: string; Icon: LucideIcon | null }[]
+          ).map(({ value, label, Icon }) => (
             <button
               key={value}
               onClick={() => setPetFilter(value)}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
                 petFilter === value
                   ? 'bg-accent text-accent-foreground border-accent'
                   : 'bg-card text-foreground/60 border-border hover:border-accent/40'
               }`}
             >
+              {Icon && <Icon className='w-3.5 h-3.5' strokeWidth={1.8} />}
               {label}
             </button>
           ))}

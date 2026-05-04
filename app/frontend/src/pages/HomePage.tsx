@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Gift, Star, Users } from 'lucide-react';
+import { Gift, Star, Users, Package, Ticket } from 'lucide-react';
 import { HeroSection } from '@/components/home/HeroSection';
 import { ProductSection } from '@/components/home/ProductSection';
 import { ProductSectionSkeleton } from '@/components/home/ProductSectionSkeleton';
 import { CategoryQuickLinks } from '@/components/home/CategoryQuickLinks';
 import { TrustStrip } from '@/components/home/TrustStrip';
+import { PersonalizeSection } from '@/components/home/PersonalizeSection';
 import { useProducts, toIProduct } from '@/hooks/useProducts';
 import { CARE_GUIDES } from '@/data/careGuides';
 
@@ -121,8 +122,56 @@ function MdSection() {
 export function HomePage() {
   return (
     <div className='bg-background'>
-      {/* 1. 히어로 — 풀블리드 */}
-      <HeroSection />
+      {/* 1. 히어로 Bento — 메인 슬라이더 + 보조 카드 2개 */}
+      <section className='max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 pt-4'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4'>
+          {/* 메인 hero — 좌측 2/3 */}
+          <div className='lg:col-span-2'>
+            <HeroSection />
+          </div>
+
+          {/* 보조 카드 — 우측 1/3, 모바일은 가로 2분할 */}
+          <div className='grid grid-cols-2 lg:grid-cols-1 gap-3 lg:gap-4'>
+            <Link
+              to='/signup'
+              className='group relative overflow-hidden rounded-2xl bg-[var(--badge-care)] text-white p-5 md:p-6 flex flex-col justify-between aspect-square lg:aspect-auto hover:-translate-y-0.5 hover:shadow-md transition-all motion-reduce:transform-none'
+            >
+              <div className='relative z-10'>
+                <div className='inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/15 mb-3'>
+                  <Ticket className='w-4 h-4' strokeWidth={1.8} />
+                </div>
+                <p className='text-[10px] tracking-[0.25em] font-bold uppercase opacity-80 mb-1'>WELCOME</p>
+                <p className='text-lg md:text-xl font-bold leading-tight'>
+                  신규 가입<br />5,000원 할인
+                </p>
+              </div>
+              <span className='relative z-10 text-xs font-semibold opacity-90 group-hover:opacity-100'>
+                지금 가입 <span aria-hidden className='inline-block transition-transform group-hover:translate-x-0.5'>→</span>
+              </span>
+              <div className='absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-white/10' aria-hidden />
+            </Link>
+
+            <Link
+              to='/products?sort=sale'
+              className='group relative overflow-hidden rounded-2xl bg-accent text-accent-foreground p-5 md:p-6 flex flex-col justify-between aspect-square lg:aspect-auto hover:-translate-y-0.5 hover:shadow-md transition-all motion-reduce:transform-none'
+            >
+              <div className='relative z-10'>
+                <div className='inline-flex items-center justify-center w-9 h-9 rounded-xl bg-accent-foreground/15 mb-3'>
+                  <Package className='w-4 h-4' strokeWidth={1.8} />
+                </div>
+                <p className='text-[10px] tracking-[0.25em] font-bold uppercase opacity-80 mb-1'>SUBSCRIBE</p>
+                <p className='text-lg md:text-xl font-bold leading-tight'>
+                  정기배송<br />상시 -10%
+                </p>
+              </div>
+              <span className='relative z-10 text-xs font-semibold opacity-90 group-hover:opacity-100'>
+                자세히 보기 <span aria-hidden className='inline-block transition-transform group-hover:translate-x-0.5'>→</span>
+              </span>
+              <div className='absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-accent-foreground/10' aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* 2. 카테고리 퀵링크 */}
       <section className='py-10 md:py-12 px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto'>
@@ -136,6 +185,9 @@ export function HomePage() {
       <section className='py-12 md:py-14 px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto'>
         <BestSection />
       </section>
+
+      {/* 4.5. 퍼스널라이즈 — 시안 D 차별화 */}
+      <PersonalizeSection />
 
       {/* 5. 정기배송 프로모션 + 추가 혜택 카드 3종 */}
       <section className='px-4 md:px-8 lg:px-12 max-w-[1440px] mx-auto pb-10 md:pb-12 space-y-5'>
