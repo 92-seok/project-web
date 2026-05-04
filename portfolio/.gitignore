@@ -1,0 +1,7 @@
+# 빌드 환경 (로컬 전용 — git에는 결과물 .pptx만 보관)
+node_modules/
+package.json
+package-lock.json
+generate.js
+*.log
+.DS_Store
