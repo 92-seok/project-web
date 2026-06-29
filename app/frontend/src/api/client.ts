@@ -1,10 +1,11 @@
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
-import type { ApiErrorResponse } from '@/types/auth';
-import { useAuthStore } from '@/store/authStore';
+import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
+import type { ApiErrorResponse } from "@/types/auth";
+import { useAuthStore } from "@/store/authStore";
 
 export const apiClient = axios.create({
-  baseURL: '/api',
-  headers: { 'Content-Type': 'application/json' },
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  // baseURL: '/api',
+  headers: { "Content-Type": "application/json" },
 });
 
 // 토큰 갱신 중 플래그 (동시 요청 중복 방지)
@@ -32,15 +33,21 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (res) => res,
   async (err: AxiosError<ApiErrorResponse>) => {
-    const originalRequest = err.config as InternalAxiosRequestConfig & { _retry?: boolean };
-    const isAuthEndpoint = originalRequest?.url?.startsWith('/auth/');
+    const originalRequest = err.config as InternalAxiosRequestConfig & {
+      _retry?: boolean;
+    };
+    const isAuthEndpoint = originalRequest?.url?.startsWith("/auth/");
 
     // auth 엔드포인트 오류거나 401이 아닌 경우: 에러 그대로 전파
-    if (err.response?.status !== 401 || isAuthEndpoint || originalRequest._retry) {
+    if (
+      err.response?.status !== 401 ||
+      isAuthEndpoint ||
+      originalRequest._retry
+    ) {
       if (err.response?.data) return Promise.reject(err.response.data);
       return Promise.reject({
-        code: 'NETWORK',
-        message: '네트워크 오류가 발생했습니다.',
+        code: "NETWORK",
+        message: "네트워크 오류가 발생했습니다.",
         fieldErrors: [],
       } satisfies ApiErrorResponse);
     }
@@ -66,19 +73,23 @@ apiClient.interceptors.response.use(
     if (!refreshToken) {
       isRefreshing = false;
       clearAuth();
-      window.location.replace('/login');
+      window.location.replace("/login");
       return Promise.reject({
-        code: 'UNAUTHORIZED',
-        message: '세션이 만료되었습니다. 다시 로그인해주세요.',
+        code: "UNAUTHORIZED",
+        message: "세션이 만료되었습니다. 다시 로그인해주세요.",
         fieldErrors: [],
       } satisfies ApiErrorResponse);
     }
 
     try {
       // refresh는 인터셉터 루프를 피하기 위해 직접 axios 호출
-      const { data } = await axios.post<{ accessToken: string }>('/api/auth/refresh', {
-        refreshToken,
-      });
+      const { data } = await axios.post<{ accessToken: string }>(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/refresh`,
+        // "/api/auth/refresh",
+        {
+          refreshToken,
+        },
+      );
       const newToken = data.accessToken;
       setAccessToken(newToken);
       processQueue(null, newToken);
@@ -87,10 +98,10 @@ apiClient.interceptors.response.use(
     } catch (refreshErr) {
       processQueue(refreshErr, null);
       clearAuth();
-      window.location.replace('/login');
+      window.location.replace("/login");
       return Promise.reject({
-        code: 'UNAUTHORIZED',
-        message: '세션이 만료되었습니다. 다시 로그인해주세요.',
+        code: "UNAUTHORIZED",
+        message: "세션이 만료되었습니다. 다시 로그인해주세요.",
         fieldErrors: [],
       } satisfies ApiErrorResponse);
     } finally {
