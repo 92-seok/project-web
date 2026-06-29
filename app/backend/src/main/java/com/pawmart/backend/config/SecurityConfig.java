@@ -28,6 +28,9 @@ public class SecurityConfig {
   @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000}")
   private String[] allowedOrigins;
 
+  @Value("${app.cors.allowed-origin-patterns:https://*.vercel.app}")
+  private String[] allowedOriginPatterns;
+
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
@@ -58,6 +61,7 @@ public class SecurityConfig {
   CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowedOrigins(Arrays.asList(allowedOrigins));
+    config.setAllowedOriginPatterns(Arrays.asList(allowedOriginPatterns));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
     config.setAllowedHeaders(List.of("*"));
     config.setExposedHeaders(List.of("Authorization", "Location"));
