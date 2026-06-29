@@ -255,7 +255,7 @@ export function ProductManagePage() {
   async function handleSave(data: ICreateProductRequest) {
     if (modalTarget === 'new') {
       await adminApi.createProduct(data);
-    } else if (modalTarget && modalTarget !== 'new') {
+    } else if (modalTarget) {
       await adminApi.updateProduct(modalTarget.id, data);
     }
     fetchProducts(page);
